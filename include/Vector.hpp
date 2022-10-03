@@ -134,8 +134,16 @@ namespace ft {
 		 * ex06
 		 */
 		Vector	cross(const Vector& rhs) const {
+			Vector out;
 
-		}
+			if (this->size() != 3 || rhs.size() != 3) {
+				return (out);
+			}
+			out.resize(this->size());
+			out[0] = (*this)[1] * rhs[2] - rhs[1] * (*this)[2];
+			out[1] = (*this)[2] * rhs[0] - rhs[2] * (*this)[0];
+			out[2] = (*this)[0] * rhs[1] - rhs[0] * (*this)[1];
+			return (out);		}
 
 
 		friend std::ostream&	operator<<(std::ostream& o, ft::Vector<T>& vec) {
