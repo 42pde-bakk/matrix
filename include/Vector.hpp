@@ -77,6 +77,20 @@ namespace ft {
 			return (out);
 		}
 
+		/*
+		 * ex03
+		 */
+		T	dot(const Vector& rhs) const {
+			T	out = T();
+
+			if (this->size() != rhs.size())
+				return (out);
+			for (size_t i = 0; i < this->size(); i++) {
+				out += (*this)[i] * rhs[i];
+			}
+			return (out);
+		}
+
 
 		friend std::ostream&	operator<<(std::ostream& o, ft::Vector<T>& vec) {
 			for (auto& item : vec) {
