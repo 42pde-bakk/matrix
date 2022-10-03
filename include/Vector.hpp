@@ -7,6 +7,8 @@
 #include <vector>
 #include <stdexcept>
 #include <ostream>
+#include <iostream>
+#include <cmath>
 
 namespace ft {
 
@@ -89,6 +91,36 @@ namespace ft {
 				out += (*this)[i] * rhs[i];
 			}
 			return (out);
+		}
+
+		/*
+		 * ex04
+		 */
+		[[nodiscard]] T	norm_1() const {
+			T out = T();
+
+			for (auto& item : *this) {
+				out += fabs(item);
+			}
+			return (out);
+		}
+		[[nodiscard]] T norm() const {
+			T out = T();
+
+			for (auto& item : *this) {
+				out += pow(item, 2);
+			}
+			return (sqrt(out));
+		}
+		[[nodiscard]] T norm_inf() const {
+			T max_item = T();
+
+			for (auto& item : *this) {
+				const T item_abs = fabs(item);
+				if (item_abs > max_item)
+					max_item = item_abs;
+			}
+			return (max_item);
 		}
 
 
