@@ -1,0 +1,35 @@
+name: C/C++ CI Ubuntu
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: make
+      run: make
+    - name: Test ex00
+      run: ./debug/bin/ex00
+    - name: Test ex01
+      run: ./debug/bin/ex01
+    - name: Test ex02
+      run: ./debug/bin/ex02
+    - name: Test ex03
+      run: ./debug/bin/ex03
+    - name: Test ex04
+      run: ./debug/bin/ex04
+    - name: Test ex05
+      run: ./debug/bin/ex05
+    - name: Test ex06
+      run: ./debug/bin/ex06
+    - name: Test ex07
+      run: ./debug/bin/ex07
+    - name: Test ex08
+      run: ./debug/bin/ex08
