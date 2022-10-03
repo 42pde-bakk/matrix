@@ -123,6 +123,20 @@ namespace ft {
 			return (max_item);
 		}
 
+		/*
+		 * ex05
+		 */
+		T	angle_cos(const Vector& rhs) const {
+			return this->dot(rhs) / (this->norm() * rhs.norm());
+		}
+
+		/*
+		 * ex06
+		 */
+		Vector	cross(const Vector& rhs) const {
+
+		}
+
 
 		friend std::ostream&	operator<<(std::ostream& o, ft::Vector<T>& vec) {
 			for (auto& item : vec) {
@@ -133,6 +147,14 @@ namespace ft {
 		}
 	};
 
+	template <typename T>
+	T	angle_cos(const Vector<T>& u, const Vector<T>& v) {
+		return u.angle_cos(v);
+	}
+	template <typename T>
+	Vector<T>	cross_product(const Vector<T>& u, const Vector<T>& v) {
+		return (u.cross(v));
+	}
 }
 
 
