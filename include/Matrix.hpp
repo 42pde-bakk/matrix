@@ -29,6 +29,8 @@ namespace ft {
 
 	public:
 
+		Matrix() = default;
+
 		Matrix(const Matrix &rhs) : vec2d(rhs) {
 		}
 
@@ -55,6 +57,9 @@ namespace ft {
 			return (out);
 		}
 
+		/*
+		 * ex00
+		 */
 		void add(const Matrix &v) {
 			if (this->get_shape() != v.get_shape()) {
 				throw std::runtime_error("Error. Trying to add matrices of different shapes!");
@@ -76,7 +81,6 @@ namespace ft {
 				}
 			}
 		}
-
 		void scl(T a) {
 			for (auto& row : *this) {
 				for (auto& item : row) {
@@ -84,6 +88,42 @@ namespace ft {
 				}
 			}
 		}
+
+		/*
+		 * ex02
+		 */
+		Matrix	operator+(const Matrix& rhs) const {
+			Matrix out(*this);
+
+			for (size_t i = 0; i < this->size(); i++) {
+				for (size_t n = 0; n < (*this)[i].size(); n++) {
+					out[i][n] += rhs[i][n];
+				}
+			}
+			return (out);
+		}
+		Matrix	operator-(const Matrix& rhs) const {
+			Matrix out(*this);
+
+			for (size_t i = 0; i < this->size(); i++) {
+				for (size_t n = 0; n < (*this)[i].size(); n++) {
+					out[i][n] -= rhs[i][n];
+				}
+			}
+			return (out);
+		}
+		Matrix	operator*(T scalar) const {
+			Matrix out(*this);
+
+			for (size_t i = 0; i < this->size(); i++) {
+				for (size_t n = 0; n < (*this)[i].size(); n++) {
+					out[i][n] *= scalar;
+				}
+			}
+			return (out);
+		}
+
+
 		friend std::ostream&	operator<<(std::ostream& o, ft::Matrix<T>& m) {
 			for (auto& row : m) {
 				for (auto& item : row) {

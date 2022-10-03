@@ -6,6 +6,7 @@
 #define MATRIX_VECTOR_HPP
 #include <vector>
 #include <stdexcept>
+#include <ostream>
 
 namespace ft {
 
@@ -25,7 +26,9 @@ namespace ft {
 			return (*this);
 		}
 
-
+		/*
+		 * ex00
+		 */
 		void	add(const Vector& rhs) {
 			if (this->size() != rhs.size())
 				throw std::runtime_error("Vector not same size");
@@ -46,10 +49,42 @@ namespace ft {
 			}
 		}
 
-		T	get(size_t idx) const {
-			return ((*this)[idx]);
+		/*
+		 * ex02
+		 */
+		Vector	operator-(const Vector& rhs) const {
+			Vector out;
+			out.resize(this->size());
+			for (size_t i = 0; i < this->size(); i++) {
+				out[i] = (*this)[i] - rhs[i];
+			}
+			return (out);
+		}
+		Vector	operator+(const Vector& rhs) const {
+			Vector out;
+			out.resize(this->size());
+			for (size_t i = 0; i < this->size(); i++) {
+				out[i] = (*this)[i] + rhs[i];
+			}
+			return (out);
+		}
+		Vector	operator*(T scalar) const {
+			Vector out;
+			out.resize(this->size());
+			for (size_t i = 0; i < this->size(); i++) {
+				out[i] = (*this)[i] * scalar;
+			}
+			return (out);
 		}
 
+
+		friend std::ostream&	operator<<(std::ostream& o, ft::Vector<T>& vec) {
+			for (auto& item : vec) {
+				o << item << ' ';
+			}
+			o << '\n';
+			return (o);
+		}
 	};
 
 }

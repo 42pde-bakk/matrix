@@ -9,3 +9,4 @@ include_directories(include)
 
 add_executable(ex00 srcs/ex00.cpp)
 add_executable(ex01 srcs/ex01.cpp)
+add_executable(ex02 srcs/ex02.cpp)
