@@ -195,6 +195,20 @@ namespace ft {
 			return (total);
 		}
 
+		/*
+		 * ex09
+		 */
+		Matrix	transpose() const {
+			Matrix	out(*this);
+
+			for (size_t i = 0; i < shape.rows_nb; i++) {
+				for (size_t j = 0; j < shape.cols_nb; j++) {
+					out[i][j] = (*this)[j][i];
+				}
+			}
+			return (out);
+		}
+
 
 		friend std::ostream&	operator<<(std::ostream& o, ft::Matrix<T>& m) {
 			for (auto& row : m) {
