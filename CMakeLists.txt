@@ -8,3 +8,4 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 include_directories(include)
 
 add_executable(ex00 srcs/ex00.cpp)
+add_executable(ex01 srcs/ex01.cpp)

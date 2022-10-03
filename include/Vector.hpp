@@ -10,44 +10,44 @@
 namespace ft {
 
 	template <typename T>
-	class Vector {
-		std::vector<T>	data;
+	class Vector : public std::vector<T> {
 
 	public:
 		Vector() = default;
 		~Vector() = default;
-		Vector(const Vector& v) = default;
-		Vector(const std::vector<T>& v) : data(v) { }
-		Vector& operator=(const Vector& v) = default;
+		Vector(const Vector& v) : std::vector<T>(v) {
+		}
+		Vector(const std::vector<T>& v) : std::vector<T>(v) {
+		}
+		using std::vector<T>::operator=;
+		Vector& operator=(const Vector& v) {
+			std::vector<T>::operator=(v);
+			return (*this);
+		}
+
 
 		void	add(const Vector& rhs) {
 			if (this->size() != rhs.size())
 				throw std::runtime_error("Vector not same size");
 			for (size_t i = 0; i < this->size(); i++) {
-				this->data[i] += rhs.data[i];
+				(*this)[i] += rhs[i];
 			}
 		}
 		void	sub(const Vector& rhs) {
 			if (this->size() != rhs.size())
 				throw std::runtime_error("Vector not same size");
 			for (size_t i = 0; i < this->size(); i++) {
-				this->data[i] -= rhs.data[i];
+				(*this)[i] -= rhs[i];
 			}
 		}
 		void	scl(T f) {
 			for (size_t i = 0; i < this->size(); i++) {
-				this->data[i] *= f;
+				(*this)[i] *= f;
 			}
 		}
 
-		[[nodiscard]] size_t	size() const {
-			return (this->data.size());
-		}
-		T	operator[](size_t idx) {
-			return (this->data[idx]);
-		}
-		constexpr T&	operator[](size_t idx) const {
-			return (this->data[idx]);
+		T	get(size_t idx) const {
+			return ((*this)[idx]);
 		}
 
 	};
