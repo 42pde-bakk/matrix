@@ -8,6 +8,7 @@
 #include <vector>
 #include <stdexcept>
 #include <iostream>
+#include "Vector.hpp"
 
 
 namespace ft {
@@ -26,21 +27,36 @@ namespace ft {
 	template<typename T>
 	class Matrix : public std::vector<std::vector<T>> {
 		typedef std::vector<std::vector<T>> vec2d;
+		Shape shape{};
+
+		void	set_shape() {
+			this->shape.rows_nb = this->size();
+			if (this->shape.rows_nb > 0) {
+				this->shape.cols_nb = (*this)[0].size();
+				for (size_t i = 0; i < this->shape.rows_nb; i++) {
+					if ((*this)[i].size() != this->shape.cols_nb)
+						throw std::runtime_error("Bad vector given as argument to Matrix");
+				}
+			}
+		}
 
 	public:
 
 		Matrix() = default;
 
 		Matrix(const Matrix &rhs) : vec2d(rhs) {
+			this->set_shape();
 		}
 
 		Matrix(std::vector<std::vector<T>> rhs) : vec2d(rhs) {
+			this->set_shape();
 		}
 
 		using vec2d::operator=;
 		Matrix &operator=(const Matrix& rhs) {
 			if (this != &rhs) {
 				vec2d::operator=(rhs);
+				this->set_shape();
 			}
 			return (*this);
 		}
@@ -48,20 +64,14 @@ namespace ft {
 		~Matrix() = default;
 
 		[[nodiscard]] Shape get_shape() const {
-			Shape out{0, 0};
-
-			out.rows_nb = this->size();
-			if (out.rows_nb > 0) {
-				out.cols_nb = (*this)[0].size();
-			}
-			return (out);
+			return (this->shape);
 		}
 
 		/*
 		 * ex00
 		 */
 		void add(const Matrix &v) {
-			if (this->get_shape() != v.get_shape()) {
+			if (this->shape != v.shape) {
 				throw std::runtime_error("Error. Trying to add matrices of different shapes!");
 			}
 			for (size_t i = 0; i < this->size(); ++i) {
@@ -72,7 +82,7 @@ namespace ft {
 		}
 
 		void sub(const Matrix &v) {
-			if (this->get_shape() != v.get_shape()) {
+			if (this->shape != v.shape) {
 				throw std::runtime_error("Error. Trying to subtract matrices of different shapes!");
 			}
 			for (size_t i = 0; i < this->size(); ++i) {
@@ -121,6 +131,47 @@ namespace ft {
 				}
 			}
 			return (out);
+		}
+
+		/*
+		 * ex07
+		 */
+		Vector<T>	operator*(const Vector<T>& rhs) const {
+			Vector<T> out;
+
+			out.resize(shape.rows_nb);
+			if (this->shape.cols_nb != rhs.size()) {
+				return (out);
+			}
+			for (size_t i = 0; i < shape.rows_nb; i++) {
+				for (size_t n = 0; n < shape.cols_nb; n++) {
+					out[i] += (*this)[i][n] * rhs[n];
+				}
+			}
+			return (out);
+		}
+		Vector<T>	mul_vec(const Vector<T>& rhs) const {
+			return (*this * rhs);
+		}
+		Matrix	operator*(const Matrix& rhs) const {
+			Matrix	out;
+
+			out.resize(this->size());
+			for (size_t i = 0; i < out.size(); i++)
+				out[i].resize(rhs.shape.cols_nb);
+			if (shape.cols_nb != rhs.shape.rows_nb)
+				return (out);
+			for (size_t a = 0; a < shape.rows_nb; a++) {
+				for (size_t b = 0; b < rhs.shape.cols_nb; b++) {
+					for (size_t p = 0; p < shape.cols_nb; p++) {
+						out[a][b] += (*this)[a][p] * rhs[p][b];
+					}
+				}
+			}
+			return (out);
+		}
+		Matrix	mul_mat(const Matrix& rhs) const {
+			return (*this * rhs);
 		}
 
 
