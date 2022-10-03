@@ -52,8 +52,16 @@ namespace ft {
 			this->set_shape();
 		}
 
-		using vec2d::operator=;
-		Matrix &operator=(const Matrix& rhs) {
+//		using vec2d::operator=;
+		Matrix&	operator=(const vec2d& rhs) {
+			if (this != &rhs) {
+				vec2d::operator=(rhs);
+				this->set_shape();
+			}
+			return (*this);
+
+		}
+		Matrix& operator=(const Matrix& rhs) {
 			if (this != &rhs) {
 				vec2d::operator=(rhs);
 				this->set_shape();
@@ -172,6 +180,19 @@ namespace ft {
 		}
 		Matrix	mul_mat(const Matrix& rhs) const {
 			return (*this * rhs);
+		}
+
+		/*
+		 * ex08
+		 */
+		T	trace() const {
+			T total = T();
+			if (shape.rows_nb != shape.cols_nb)
+				return (total);
+			for (size_t i = 0; i < shape.rows_nb; i++) {
+				total += (*this)[i][i];
+			}
+			return (total);
 		}
 
 
