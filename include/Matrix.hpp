@@ -12,7 +12,7 @@
 
 namespace ft {
 	struct Shape {
-		size_t rows_nb,
+		size_t	rows_nb,
 				cols_nb;
 
 		bool operator==(const Shape& rhs) const {
@@ -24,27 +24,22 @@ namespace ft {
 	};
 
 	template<typename T>
-	class Matrix {
-		std::vector<std::vector<T>> data;
+	class Matrix : public std::vector<std::vector<T>> {
+		typedef std::vector<std::vector<T>> vec2d;
 
 	public:
-//		Matrix(size_t n, size_t value) : data(n, value) {
-//		}
 
-		Matrix(const Matrix &rhs) {
-			this->data = rhs.data;
+		Matrix(const Matrix &rhs) : vec2d(rhs) {
 		}
 
-		Matrix(std::vector<std::vector<T>> rhs) {
-			this->data = rhs;
+		Matrix(std::vector<std::vector<T>> rhs) : vec2d(rhs) {
 		}
 
-		Matrix &operator=(const std::vector<std::vector<float>>& rhs) {
-			this->data = rhs;
-			return (*this);
-		}
+		using vec2d::operator=;
 		Matrix &operator=(const Matrix& rhs) {
-			this->data = rhs.data;
+			if (this != &rhs) {
+				vec2d::operator=(rhs);
+			}
 			return (*this);
 		}
 
@@ -53,9 +48,9 @@ namespace ft {
 		[[nodiscard]] Shape get_shape() const {
 			Shape out{0, 0};
 
-			out.rows_nb = this->data.size();
+			out.rows_nb = this->size();
 			if (out.rows_nb > 0) {
-				out.cols_nb = this->data[0].size();
+				out.cols_nb = (*this)[0].size();
 			}
 			return (out);
 		}
@@ -64,9 +59,9 @@ namespace ft {
 			if (this->get_shape() != v.get_shape()) {
 				throw std::runtime_error("Error. Trying to add matrices of different shapes!");
 			}
-			for (size_t i = 0; i < data.size(); ++i) {
-				for (size_t j = 0; j < data[i].size(); j++) {
-					this->data[i][j] += v.data[i][j];
+			for (size_t i = 0; i < this->size(); ++i) {
+				for (size_t j = 0; j < (*this)[i].size(); j++) {
+					(*this)[i][j] += v[i][j];
 				}
 			}
 		}
@@ -75,33 +70,22 @@ namespace ft {
 			if (this->get_shape() != v.get_shape()) {
 				throw std::runtime_error("Error. Trying to subtract matrices of different shapes!");
 			}
-			for (size_t i = 0; i < data.size(); ++i) {
-				for (size_t j = 0; j < data[i].size(); j++) {
-					this->data[i][j] -= v.data[i][j];
+			for (size_t i = 0; i < this->size(); ++i) {
+				for (size_t j = 0; j < (*this)[i].size(); j++) {
+					(*this)[i][j] -= v[i][j];
 				}
 			}
 		}
 
 		void scl(T a) {
-			for (auto& row : this->data) {
+			for (auto& row : *this) {
 				for (auto& item : row) {
 					item *= a;
 				}
 			}
-//			for (size_t i = 0; i < data.size(); ++i) {
-//				for (size_t j = 0; j < data[i].size(); j++) {
-//					this->data[i][j] *= a;
-//				}
-//			}
-		}
-		std::vector<T>&	operator[](size_t idx) {
-			return (this->data[idx]);
-		}
-		constexpr std::vector<T>&	operator[](size_t idx) const {
-			return (this->data[idx]);
 		}
 		friend std::ostream&	operator<<(std::ostream& o, ft::Matrix<T>& m) {
-			for (auto& row : m.data) {
+			for (auto& row : m) {
 				for (auto& item : row) {
 					o << item << ' ';
 				}
