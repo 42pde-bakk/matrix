@@ -209,6 +209,51 @@ namespace ft {
 			return (out);
 		}
 
+		/*
+		 * ex10
+		 */
+		void	normalize_row(size_t row_idx, size_t lead) {
+			for (size_t i = 0; i < shape.cols_nb; i++) {
+				(*this)[row_idx][i] /= (*this)[row_idx][lead];
+			}
+		}
+		Matrix	row_echelon() const {
+			Matrix	out(*this);
+			size_t lead = 0;
+
+			for (size_t r = 0; r < shape.rows_nb; r++) {
+				if (lead >= shape.cols_nb)
+					return (out);
+				size_t i = r;
+				while (out[i][lead] == 0) {
+					i += 1;
+					if (i == shape.rows_nb) {
+						i = r;
+						lead += 1;
+						if (lead == shape.cols_nb)
+							return (out);
+					}
+				}
+				if (i != r) {
+					std::swap(out[i], out[r]);
+				}
+				// divide row r by (*this)[r][lead]
+				for (size_t idx = 0; idx < shape.cols_nb; idx++) {
+					out[r][idx] /= out[r][lead];
+				}
+				for (size_t j = 0; j < shape.rows_nb; j++) {
+					if (j != r) {
+						//Subtract M[j, lead] multiplied by row r from row j
+						for (size_t idx = 0; idx < shape.rows_nb; idx++) {
+							out[j][idx] -= (out[r][idx] * (*this)[j][lead]);
+						}
+					}
+				}
+				lead += 1;
+			}
+			return (out);
+		}
+
 
 		friend std::ostream&	operator<<(std::ostream& o, ft::Matrix<T>& m) {
 			for (auto& row : m) {
