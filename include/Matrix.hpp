@@ -8,6 +8,7 @@
 #include <vector>
 #include <cstdio>
 #include <stdexcept>
+#include <array>
 #include <iostream>
 #include <iomanip>
 #include "Vector.hpp"
@@ -253,6 +254,66 @@ namespace ft {
 				lead++;
 			}
 			return (*this);
+		}
+
+		/*
+		 * ex11
+		 */
+	private:
+		Matrix	squareMatrix(size_t n) const {
+			Matrix out;
+			out.resize(n);
+			for (size_t i = 0; i < n; i++) {
+				out[i].resize(n, 0);
+			}
+			return (out);
+		}
+
+		Matrix	minor(size_t x, size_t y) const {
+			size_t len = this->size() - 1;
+			Matrix result = squareMatrix(len);
+
+			for (size_t i = 0; i < len; i++) {
+				for (size_t j = 0; j < len; j++) {
+					if (i < x && j < y)
+						result[i][j] = (*this)[i][j];
+					else if (i >= x && j < y)
+						result[i][j] = (*this)[i + 1][j];
+					else if (i < x && j >= y)
+						result[i][j] = (*this)[i][j + 1];
+					else
+						result[i][j] = (*this)[i + 1][j + 1];
+				}
+			}
+			return (result);
+		}
+
+	public:
+		T	perm() const {
+			if (this->size() == 1) {
+				return (*this)[0][0];
+			}
+			T sum = 0;
+			for (size_t i = 0; i < this->size(); i++) {
+				sum += (*this)[0][i] * this->minor(0, i).perm();
+			}
+			return (sum);
+		}
+		T	determinant() const {
+			double result = 0;
+			int sign = 1;
+
+			if (shape.rows_nb == 1)
+				return (*this)[0][0];
+			for (size_t i = 0; i < shape.rows_nb; i++) {
+				auto first = (*this)[0][i];
+				auto minority = this->minor(0, i);
+				auto minority_det = minority.determinant();
+				result += + sign * first * minority_det;
+//				result += sign * (*this)[0][i] * minor(0, i).determinant();
+				sign = -sign;
+			}
+			return (result);
 		}
 
 
