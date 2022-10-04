@@ -6,8 +6,10 @@
 #define MATRIX_MATRIX_HPP
 
 #include <vector>
+#include <cstdio>
 #include <stdexcept>
 #include <iostream>
+#include <iomanip>
 #include "Vector.hpp"
 
 
@@ -212,53 +214,52 @@ namespace ft {
 		/*
 		 * ex10
 		 */
-		void	normalize_row(size_t row_idx, size_t lead) {
-			for (size_t i = 0; i < shape.cols_nb; i++) {
-				(*this)[row_idx][i] /= (*this)[row_idx][lead];
+		void	mult_and_add_rows(size_t ixrdest, size_t ixrsrc, T mplr) {
+			for (size_t ix = 0; ix < shape.cols_nb; ix++) {
+				(*this)[ixrdest][ix] += mplr * (*this)[ixrsrc][ix];
 			}
 		}
-		Matrix	row_echelon() const {
-			Matrix	out(*this);
+		void	normalize_row(size_t row_idx, size_t lead) {
+			const T lead_elem = (*this)[row_idx][lead];
+			for (size_t i = 0; i < shape.cols_nb; i++) {
+				(*this)[row_idx][i] /= lead_elem;
+			}
+		}
+		Matrix	row_echelon() {
 			size_t lead = 0;
 
-			for (size_t r = 0; r < shape.rows_nb; r++) {
+			for (size_t rix = 0; rix < shape.rows_nb; rix++) {
 				if (lead >= shape.cols_nb)
-					return (out);
-				size_t i = r;
-				while (out[i][lead] == 0) {
-					i += 1;
-					if (i == shape.rows_nb) {
-						i = r;
-						lead += 1;
+					return (*this);
+				size_t iix = rix;
+				while ((*this)[iix][lead] == 0.0) {
+					iix++;
+					if (iix == shape.rows_nb) {
+						iix = rix;
+						lead++;
 						if (lead == shape.cols_nb)
-							return (out);
+							return (*this);
 					}
 				}
-				if (i != r) {
-					std::swap(out[i], out[r]);
-				}
-				// divide row r by (*this)[r][lead]
-				for (size_t idx = 0; idx < shape.cols_nb; idx++) {
-					out[r][idx] /= out[r][lead];
-				}
-				for (size_t j = 0; j < shape.rows_nb; j++) {
-					if (j != r) {
-						//Subtract M[j, lead] multiplied by row r from row j
-						for (size_t idx = 0; idx < shape.rows_nb; idx++) {
-							out[j][idx] -= (out[r][idx] * (*this)[j][lead]);
-						}
+				std::swap((*this)[iix], (*this)[rix]);
+				this->normalize_row(rix, lead);
+
+				for (iix = 0; iix < shape.rows_nb; iix++) {
+					if (iix != rix) {
+						T lv = (*this)[iix][lead];
+						this->mult_and_add_rows(iix, rix, -lv);
 					}
 				}
-				lead += 1;
+				lead++;
 			}
-			return (out);
+			return (*this);
 		}
 
 
 		friend std::ostream&	operator<<(std::ostream& o, ft::Matrix<T>& m) {
 			for (auto& row : m) {
 				for (auto& item : row) {
-					o << item << ' ';
+					o << std::setprecision(5) << item << ' ';
 				}
 				o << '\n';
 			}

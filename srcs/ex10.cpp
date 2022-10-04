@@ -21,25 +21,26 @@ bool	feq(double a, double b) {
 int main() {
 	ft::Matrix<float> u;
 	ft::Matrix<float> echelon;
-	u = {{1.0, 0.0, 0.0},
-		 {0.0, 1.0, 0.0},
-		 {0.0, 0.0, 1.0} };
-	echelon = u.row_echelon();
-	std::cout << echelon << '\n';
-
-	u = {{1.0, 2.0},
-		 {3.0, 4.0}};
-	echelon = u.row_echelon();
-	std::cout << echelon << '\n';
-
-	u = {{1.0, 2.0},
-		 {2.0, 4.0}};
-	echelon = u.row_echelon();
-	std::cout << echelon << '\n';
+//	u = {{1.0, 0.0, 0.0},
+//		 {0.0, 1.0, 0.0},
+//		 {0.0, 0.0, 1.0} };
+//	echelon = u.row_echelon();
+//	std::cout << echelon << '\n';
+//
+//	u = {{1.0, 2.0},
+//		 {3.0, 4.0}};
+//	echelon = u.row_echelon();
+//	std::cout << echelon << '\n';
+//
+//	u = {{1.0, 2.0},
+//		 {2.0, 4.0}};
+//	echelon = u.row_echelon();
+//	std::cout << echelon << '\n';
 
 	u = {{8.0, 5.0, -2.0, 4.0, 28.0},
 		 {4.0, 2.5, 20.0, 4.0, -4.0},
 		 {8.0, 5.0, 1.0, 4.0, 17.0}};
+	std::cout << "original:\n" << u << "\n";
 	echelon = u.row_echelon();
 	std::cout << echelon << '\n';
 
