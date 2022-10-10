@@ -4,13 +4,8 @@
 
 #include "Matrix.hpp"
 #include "Vector.hpp"
-#include <vector>
-#include <stdexcept>
-#include <cstdio>
-#include <stdexcept>
 #include <cassert>
-#include <limits>
-#include <cmath>
+
 
 void	test_mul_vec() {
 	ft::Matrix<float> u = ft::Matrix<float>({{1.0, 0.0}, {0.0, 1.0}});

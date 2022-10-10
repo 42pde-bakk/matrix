@@ -180,7 +180,7 @@ namespace ft {
 			}
 			for (size_t i = 0; i < shape.rows_nb; i++) {
 				for (size_t n = 0; n < shape.cols_nb; n++) {
-					out[i] += (*this)[i][n] * rhs[n];
+					out[i] = std::fma((*this)[i][n], rhs[n], out[i]);
 				}
 			}
 			return (out);
@@ -199,7 +199,8 @@ namespace ft {
 			for (size_t a = 0; a < shape.rows_nb; a++) {
 				for (size_t b = 0; b < rhs.shape.cols_nb; b++) {
 					for (size_t p = 0; p < shape.cols_nb; p++) {
-						out[a][b] += (*this)[a][p] * rhs[p][b];
+						out[a][b] = std::fma((*this)[a][p], rhs[p][b], out[a][b]);
+//						out[a][b] += (*this)[a][p] * rhs[p][b];
 					}
 				}
 			}
