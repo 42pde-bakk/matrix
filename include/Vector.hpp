@@ -108,7 +108,7 @@ namespace ft {
 			T out = T();
 
 			for (auto& item : *this) {
-				out += pow(item, 2);
+				out = std::fma(item, item, out);
 			}
 			return (sqrt(out));
 		}
