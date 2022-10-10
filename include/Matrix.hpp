@@ -323,7 +323,7 @@ namespace ft {
 			}
 			return (sum);
 		}
-		T	determinant() const {
+		[[nodiscard]] T	determinant() const {
 			double result = 0;
 			int sign = 1;
 
