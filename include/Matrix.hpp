@@ -343,13 +343,6 @@ namespace ft {
 		/*
 		 * ex12
 		 */
-//		Matrix actual_row_echelon() {
-//			for (size_t r = 0; r < shape.rows_nb; r++) {
-//				bool allzeroes = true;
-//				for (size_t )
-//			}
-//		}
-
 		static Matrix	identity(size_t n) {
 			Matrix out(n);
 			for (size_t i = 0; i < n; i++) {
@@ -390,6 +383,38 @@ namespace ft {
 				}
 			}
 			return (out);
+		}
+
+		/*
+		 * ex13
+		 */
+		[[nodiscard]] size_t	rank() const {
+			Matrix	copy(*this);
+			size_t rank = 0;
+			std::vector<bool>	row_selected(shape.rows_nb, false);
+
+			for (size_t i = 0; i < shape.cols_nb; i++) {
+				size_t j;
+				for (j = 0; j < shape.rows_nb; j++) {
+					if (!row_selected[j] && fabs(copy[j][i]) > EPSILON)
+						break ;
+				}
+				if (j != shape.rows_nb) {
+					rank++;
+					row_selected[j] = true;
+					for (size_t p = i + 1; p < shape.cols_nb; p++) {
+						copy[j][p] /= copy[j][i];
+					}
+					for (size_t k = 0; k < shape.rows_nb; k++) {
+						if (k != j && fabs(copy[k][i]) > EPSILON) {
+							for (size_t p = i + 1; p < shape.cols_nb; p++) {
+								copy[k][p] -= copy[j][p] * copy[k][i];
+							}
+						}
+					}
+				}
+			}
+			return (rank);
 		}
 
 		friend std::ostream&	operator<<(std::ostream& o, ft::Matrix<T>& m) {
