@@ -4,13 +4,9 @@
 
 #include "Matrix.hpp"
 #include "Vector.hpp"
-#include <vector>
-#include <stdexcept>
 #include <cstdio>
-#include <stdexcept>
 #include <cassert>
-#include <limits>
-#include <cmath>
+
 
 int main() {
 	ft::Matrix<float> u;

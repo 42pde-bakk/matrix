@@ -4,13 +4,9 @@
 
 #include "Matrix.hpp"
 #include "Vector.hpp"
-#include <vector>
-#include <stdexcept>
 #include <cstdio>
-#include <stdexcept>
 #include <cassert>
-#include <limits>
-#include <cmath>
+
 
 int main() {
 	ft::Matrix<float>	m({{1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}, {7.0, 8.0, 9.0}});

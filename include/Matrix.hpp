@@ -408,7 +408,7 @@ namespace ft {
 					for (size_t k = 0; k < shape.rows_nb; k++) {
 						if (k != j && fabs(copy[k][i]) > EPSILON) {
 							for (size_t p = i + 1; p < shape.cols_nb; p++) {
-								copy[k][p] -= copy[j][p] * copy[k][i];
+								copy[k][p] = std::fma(-copy[j][p], copy[k][i], copy[k][p]);
 							}
 						}
 					}
