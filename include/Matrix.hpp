@@ -185,7 +185,7 @@ namespace ft {
 			}
 			return (out);
 		}
-		Vector<T>	mul_vec(const Vector<T>& rhs) const {
+		[[nodiscard]] Vector<T>	mul_vec(const Vector<T>& rhs) const {
 			return (*this * rhs);
 		}
 		Matrix	operator*(const Matrix& rhs) const {
@@ -205,14 +205,14 @@ namespace ft {
 			}
 			return (out);
 		}
-		Matrix	mul_mat(const Matrix& rhs) const {
+		[[nodiscard]] Matrix	mul_mat(const Matrix& rhs) const {
 			return (*this * rhs);
 		}
 
 		/*
 		 * ex08
 		 */
-		T	trace() const {
+		[[nodiscard]] T	trace() const {
 			T total = T();
 			if (shape.rows_nb != shape.cols_nb)
 				return (total);
@@ -225,7 +225,7 @@ namespace ft {
 		/*
 		 * ex09
 		 */
-		Matrix	transpose() const {
+		[[nodiscard]] Matrix	transpose() const {
 			Matrix	out(*this);
 
 			for (size_t i = 0; i < shape.rows_nb; i++) {
@@ -284,7 +284,7 @@ namespace ft {
 		 * ex11
 		 */
 	private:
-		Matrix	squareMatrix(size_t n) const {
+		[[nodiscard]] Matrix	squareMatrix(size_t n) const {
 			Matrix out;
 			out.resize(n);
 			for (size_t i = 0; i < n; i++) {
@@ -293,7 +293,7 @@ namespace ft {
 			return (out);
 		}
 
-		Matrix	minor(size_t x, size_t y) const {
+		[[nodiscard]] Matrix	minor(size_t x, size_t y) const {
 			size_t len = this->size() - 1;
 			Matrix result = squareMatrix(len);
 
@@ -313,7 +313,7 @@ namespace ft {
 		}
 
 	public:
-		T	perm() const {
+		[[nodiscard]] T	perm() const {
 			if (this->size() == 1) {
 				return (*this)[0][0];
 			}
@@ -350,7 +350,7 @@ namespace ft {
 			}
 			return (out);
 		}
-		Matrix	hstack(const Matrix& rhs) const {
+		[[nodiscard]] Matrix	hstack(const Matrix& rhs) const {
 			Matrix	out(*this);
 
 			if (this->shape.rows_nb != rhs.shape.rows_nb)
@@ -360,7 +360,7 @@ namespace ft {
 			}
 			return (out);
 		}
-		Matrix	vstack(const Matrix& rhs) const {
+		[[nodiscard]] Matrix	vstack(const Matrix& rhs) const {
 			Matrix	out(*this);
 
 			if (this->shape.cols_nb != rhs.shape.cols_nb)
@@ -369,7 +369,7 @@ namespace ft {
 			return (out);
 		}
 
-		Matrix	inverse() const {
+		[[nodiscard]] Matrix	inverse() const {
 			Matrix	out(*this);
 
 			if (this->shape.rows_nb != shape.cols_nb)

@@ -4,19 +4,16 @@
 
 #include "Matrix.hpp"
 #include "Vector.hpp"
-#include <vector>
-#include <stdexcept>
-#include <cstdio>
-#include <stdexcept>
 #include <cassert>
-#include <limits>
-#include <cmath>
 
 template <typename V>
 V	lerp(const V& u, const V& v, float t) {
 	if (t < 0.0 || t > 1.0)
 		return V();
 	V out = (u + (v - u) * t);
+	// Implementing this to use Fused Multiply Accumulate is easy enough for floats
+	// But I don't know how to handle it for Vectors or Matrices like:
+	// std::fma(Matrix<T> x, Matrix<T> y, Matrix<T> z);
 	std::cerr << out << "\n";
 	return (out);
 }

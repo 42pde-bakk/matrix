@@ -15,7 +15,10 @@ ft::Vector<K>	linear_combination(const std::vector<ft::Vector<K>>& u, const std:
 		return (out);
 	for (size_t i = 0; i < u.front().size(); i++) {
 		for (size_t n = 0; n < u.size(); n++) {
-			out[i] += coefs[n] * u[n][i];
+			/*
+			 * fma(x, y, z) does x * y + z in one step
+			 */
+			out[i] = std::fma(coefs[n], u[n][i], out[i]);
 		}
 	}
 	return (out);

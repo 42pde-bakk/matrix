@@ -18,7 +18,6 @@ void test_vector() {
 	u.sub(v);
 	assert(u[0] == -3.0);
 	assert(u[1] == -4.0);
-//	static_assert(u[0] == 7.0, "Failed addition")
 
 	u = ft::Vector<float>({2., 3.});
 	u.scl(2.);
