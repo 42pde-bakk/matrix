@@ -83,14 +83,14 @@ namespace ft {
 		 * ex03
 		 */
 		T	dot(const Vector& rhs) const {
-			T	out = T();
+			T	dotproduct = T();
 
 			if (this->size() != rhs.size())
-				return (out);
+				return (dotproduct);
 			for (size_t i = 0; i < this->size(); i++) {
-				out += (*this)[i] * rhs[i];
+				dotproduct = std::fma(rhs[i], (*this)[i], dotproduct);
 			}
-			return (out);
+			return (dotproduct);
 		}
 
 		/*
