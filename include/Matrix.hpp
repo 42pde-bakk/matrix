@@ -334,8 +334,7 @@ namespace ft {
 				auto first = (*this)[0][i];
 				auto minority = this->minor(0, i);
 				auto minority_det = minority.determinant();
-				result += + sign * first * minority_det;
-//				result += sign * (*this)[0][i] * minor(0, i).determinant();
+				result = std::fma(sign * first, minority_det, result);
 				sign = -sign;
 			}
 			return (result);
