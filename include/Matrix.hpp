@@ -426,7 +426,41 @@ namespace ft {
 			}
 			return (o);
 		}
+		void	to_proj(std::ostream& o) const {
+			for (size_t rownb = 0; rownb < shape.rows_nb; rownb++) {
+				for (size_t colnb = 0; colnb < shape.cols_nb; colnb++) {
+					o << std::setprecision(1) << (*this)[rownb][colnb];
+					if (colnb != shape.cols_nb - 1)
+						o << ", ";
+				}
+				std::cout << "\n";
+			}
+		}
 	};
+
+	/*
+	 * ex14 (Bonus)
+	 * https://www.scratchapixel.com/lessons/3d-basic-rendering/perspective-and-orthographic-projection-matrix/building-basic-perspective-projection-matrix
+	 */
+	Matrix<double>	projection(double fov, double ratio, double near, double far) {
+		auto	out = Matrix<double>::identity(4);
+		auto radians = tan(fov / 2);
+		double scale = 1.0 / radians;
+
+		out[0][0] = scale / ratio;
+		out[1][1] = scale;
+		out[2][2] = -(far) / (far - near);
+		out[2][3] = -1;
+		out[3][2] = -(far * near) / (far - near);
+
+		/*
+		 * s/r	0	0	0
+		 * 0	r	0	0
+		 * 0	0	A	-1
+		 * 0	0	B	0
+		 */
+		return (out);
+	}
 }
 
 #endif //MATRIX_MATRIX_HPP

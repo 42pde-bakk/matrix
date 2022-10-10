@@ -39,3 +39,8 @@
 # Cmake
 cmake-build-debug/
 debug/
+
+
+proj
+display
+assets/
