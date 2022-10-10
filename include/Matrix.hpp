@@ -55,6 +55,12 @@ namespace ft {
 			this->set_shape();
 		}
 
+		explicit Matrix(size_t n) : vec2d(n) {
+			for (size_t i = 0; i < n; i++) {
+				(*this)[i].assign(n, T());
+			}
+		}
+
 //		using vec2d::operator=;
 		Matrix&	operator=(const vec2d& rhs) {
 			if (this != &rhs) {
@@ -316,6 +322,57 @@ namespace ft {
 			return (result);
 		}
 
+		/*
+		 * ex12
+		 */
+//		Matrix actual_row_echelon() {
+//			for (size_t r = 0; r < shape.rows_nb; r++) {
+//				bool allzeroes = true;
+//				for (size_t )
+//			}
+//		}
+
+		static Matrix	identity(size_t n) {
+			Matrix out(n);
+			for (size_t i = 0; i < n; i++) {
+				out[i][i] = 1;
+			}
+			return (out);
+		}
+		Matrix	hstack(const Matrix& rhs) const {
+			Matrix	out(*this);
+
+			if (this->shape.rows_nb != rhs.shape.rows_nb)
+				throw std::runtime_error("hstack: bad rhs matrix");
+			for (size_t i = 0; i < out.shape.rows_nb; i++) {
+				out[i].insert(out[i].end(), rhs[i].begin(), rhs[i].end());
+			}
+			return (out);
+		}
+		Matrix	vstack(const Matrix& rhs) const {
+			Matrix	out(*this);
+
+			if (this->shape.cols_nb != rhs.shape.cols_nb)
+				throw std::runtime_error("vstack: bad rhs matrix");
+			out.insert(out.end(), rhs.begin(), rhs.end());
+			return (out);
+		}
+
+		Matrix	inverse() const {
+			Matrix	out(*this);
+
+			if (this->shape.rows_nb != shape.cols_nb)
+				throw std::runtime_error("bad matrix for inverse");
+			const T det = this->determinant();
+			for (size_t rownb = 0; rownb < shape.rows_nb; rownb++) {
+				for (size_t colnb = 0; colnb < shape.cols_nb; colnb++) {
+					T first = (*this)[(rownb + 1) % 3][(colnb + 1) % 3] * (*this)[(rownb + 2) % 3][(colnb + 2) % 3];
+					T second = (*this)[(rownb + 1) % 3][(colnb + 2) % 3] * (*this)[(rownb + 2) % 3][(colnb + 1) % 3];
+					out[rownb][colnb] = (first - second) / det;
+				}
+			}
+			return (out);
+		}
 
 		friend std::ostream&	operator<<(std::ostream& o, ft::Matrix<T>& m) {
 			for (auto& row : m) {
