@@ -12,12 +12,6 @@
 #include <limits>
 #include <cmath>
 
-constexpr double EPSILON = 0.00001;
-
-bool	feq(double a, double b) {
-	return (fabs(a - b) < EPSILON);
-}
-
 void	test_mul_vec() {
 	ft::Matrix<float> u = ft::Matrix<float>({{1.0, 0.0}, {0.0, 1.0}});
 	ft::Vector<float> v = ft::Vector<float>({4.0, 2.0});
@@ -36,7 +30,6 @@ void	test_mul_vec() {
 	res = u.mul_vec(v);
 	std::cout << res << "\n";
 	assert(feq(res[0], 4.0) && feq(res[1], -4.0));
-
 }
 
 void	test_mul_mat() {

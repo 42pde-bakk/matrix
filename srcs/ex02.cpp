@@ -12,8 +12,6 @@
 #include <limits>
 #include <cmath>
 
-constexpr double EPSILON = 0.00001;
-
 template <typename V>
 V	lerp(const V& u, const V& v, float t) {
 	if (t < 0.0 || t > 1.0)
@@ -23,20 +21,17 @@ V	lerp(const V& u, const V& v, float t) {
 	return (out);
 }
 
-bool	floats_equal(double a, double b) {
-	return (fabs(a - b) < EPSILON);
-}
 
 int main() {
 	assert(lerp(0.0, 1.0, 0.0) == 0.0);
 	assert(lerp(0.0, 1.0, 1.0) == 1.0);
 	assert(lerp(0.0, 1.0, 0.5) == 0.5);
-	assert(floats_equal(lerp(21.0, 42.0, 0.3), 27.3));
+	assert(feq(lerp(21.0, 42.0, 0.3), 27.3));
 
 	auto vec1 = ft::Vector<float>({2.0, 1.0});
 	auto vec2 = ft::Vector<float>({4.0, 2.0});
 	auto res = lerp(vec1, vec2, 0.3);
-	assert(floats_equal(res[0], 2.6) && floats_equal(res[1], 1.3));
+	assert(feq(res[0], 2.6) && feq(res[1], 1.3));
 
 	auto matrix1 = ft::Matrix<float>({{2.0, 1.0}, {3.0, 4.0}});
 	auto matrix2 = ft::Matrix<float>({{20.0, 10.0}, {30.0, 40.0}});

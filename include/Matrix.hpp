@@ -14,6 +14,11 @@
 #include "Vector.hpp"
 
 
+constexpr double EPSILON = 0.00001;
+bool	feq(double a, double b) {
+	return (fabs(a - b) < EPSILON);
+}
+
 namespace ft {
 	struct Shape {
 		size_t	rows_nb,
@@ -59,6 +64,19 @@ namespace ft {
 			for (size_t i = 0; i < n; i++) {
 				(*this)[i].assign(n, T());
 			}
+		}
+
+		bool	operator==(const Matrix& rhs) const {
+			if (this->shape != rhs.shape)
+				return (false);
+			for (size_t row = 0; row < shape.rows_nb; row++) {
+				for (size_t col = 0; col < shape.cols_nb; col++) {
+					if (!feq((*this)[row][col], rhs[row][col])) {
+						return (false);
+					}
+				}
+			}
+			return (true);
 		}
 
 //		using vec2d::operator=;

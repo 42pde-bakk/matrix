@@ -12,12 +12,6 @@
 #include <limits>
 #include <cmath>
 
-constexpr double EPSILON = 0.00001;
-
-bool	feq(double a, double b) {
-	return (fabs(a - b) < EPSILON);
-}
-
 int main() {
 	ft::Matrix<float> u;
 	ft::Matrix<float> inverse;
@@ -47,7 +41,7 @@ int main() {
 	std::cout << inverse << "\n";
 	assert(inverse == ft::Matrix<float>({{0.64943, -0.78161, 0.14368},
 										 {0.097701, -0.12644, 0.074713},
-										 {-0.65517, 0.96552, 0.2069}}));
+										 {-0.65517, 0.96552, -0.2069}}));
 
 
 	std::cout << "All done with ex12\n";

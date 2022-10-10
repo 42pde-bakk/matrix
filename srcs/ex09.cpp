@@ -12,12 +12,6 @@
 #include <limits>
 #include <cmath>
 
-constexpr double EPSILON = 0.00001;
-
-bool	feq(double a, double b) {
-	return (fabs(a - b) < EPSILON);
-}
-
 int main() {
 	ft::Matrix<float>	m({{1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}, {7.0, 8.0, 9.0}});
 	ft::Matrix<float>	t = m.transpose();

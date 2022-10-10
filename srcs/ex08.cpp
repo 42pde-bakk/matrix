@@ -12,12 +12,6 @@
 #include <limits>
 #include <cmath>
 
-constexpr double EPSILON = 0.00001;
-
-bool	feq(double a, double b) {
-	return (fabs(a - b) < EPSILON);
-}
-
 int main() {
 	ft::Matrix<float> u;
 	float res;
