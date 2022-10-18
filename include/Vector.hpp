@@ -9,6 +9,13 @@
 #include <ostream>
 #include <iostream>
 #include <cmath>
+#include <complex>
+
+namespace std {
+	static std::complex<float>	fma(std::complex<float> x, std::complex<float> y, std::complex<float> z) {
+		return (x * y + z);
+	}
+}
 
 namespace ft {
 
@@ -116,7 +123,7 @@ namespace ft {
 			T max_item = T();
 
 			for (auto& item : *this) {
-				const T item_abs = fabs(item);
+				T item_abs = std::abs(item);
 				if (item_abs > max_item)
 					max_item = item_abs;
 			}

@@ -22,20 +22,20 @@ V	lerp(const V& u, const V& v, float t) {
 }
 
 
-int main() {
-	assert(lerp(0.0, 1.0, 0.0) == 0.0);
-	assert(lerp(0.0, 1.0, 1.0) == 1.0);
-	assert(lerp(0.0, 1.0, 0.5) == 0.5);
-	assert(feq(lerp(21.0, 42.0, 0.3), 27.3));
+int test_02() {
+	assert(lerp(0.0if, 1.0if, 0.0) == 0.0if);
+	assert(lerp(0.0if, 1.0if, 1.0) == 1.0if);
+	assert(lerp(0.0if, 1.0if, 0.5) == 0.5if);
+	assert(lerp(21.0if, 42.0if, 0.3) == 27.3if);
 
-	auto vec1 = ft::Vector<float>({2.0, 1.0});
-	auto vec2 = ft::Vector<float>({4.0, 2.0});
+	auto vec1 = ft::Vector<std::complex<float> >({2.0if, 1.0if});
+	auto vec2 = ft::Vector<std::complex<float> >({4.0if, 2.0if});
 	auto res = lerp(vec1, vec2, 0.3);
-	assert(feq(res[0], 2.6) && feq(res[1], 1.3));
+	assert(res[0] == 2.6if && res[1] == 1.3if);
 
-	auto matrix1 = ft::Matrix<float>({{2.0, 1.0}, {3.0, 4.0}});
-	auto matrix2 = ft::Matrix<float>({{20.0, 10.0}, {30.0, 40.0}});
+	auto matrix1 = ft::Matrix<std::complex<float> >({{2.0if, 1.0if}, {3.0if, 4.0if}});
+	auto matrix2 = ft::Matrix<std::complex<float> >({{20.0if, 10.0if}, {30.0if, 40.0if}});
 	auto res2 = lerp(matrix1, matrix2, 0.5);
-	assert(res2[0][0] == 11.0 && res2[0][1] == 5.5);
-	assert(res2[1][0] == 16.5 && res2[1][1] == 22.0);
+	assert(res2[0][0] == 11.0if && res2[0][1] == 5.5if);
+	assert(res2[1][0] == 16.5if && res2[1][1] == 22.0if);
 }

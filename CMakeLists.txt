@@ -26,18 +26,19 @@ add_executable(ex13 srcs/ex13.cpp)
 add_executable(ex14 srcs/ex14.cpp)
 
 # Bonus 15
-add_executable(bonus_ex00 srcs/ex15/ex00.cpp)
-add_executable(bonus_ex01 srcs/ex15/ex01.cpp)
-add_executable(bonus_ex02 srcs/ex15/ex02.cpp)
-add_executable(bonus_ex03 srcs/ex15/ex03.cpp)
-add_executable(bonus_ex04 srcs/ex15/ex04.cpp)
-add_executable(bonus_ex05 srcs/ex15/ex05.cpp)
-add_executable(bonus_ex06 srcs/ex15/ex06.cpp)
-add_executable(bonus_ex07 srcs/ex15/ex07.cpp)
-add_executable(bonus_ex08 srcs/ex15/ex08.cpp)
-add_executable(bonus_ex09 srcs/ex15/ex09.cpp)
-add_executable(bonus_ex10 srcs/ex15/ex10.cpp)
-add_executable(bonus_ex11 srcs/ex15/ex11.cpp)
-add_executable(bonus_ex12 srcs/ex15/ex12.cpp)
-add_executable(bonus_ex13 srcs/ex15/ex13.cpp)
-add_executable(bonus_ex14 srcs/ex15/ex14.cpp)
+add_executable(ex15 srcs/ex15/main.cpp
+                    srcs/ex15/ex00.cpp
+                    srcs/ex15/ex01.cpp
+                    srcs/ex15/ex02.cpp
+                    srcs/ex15/ex03.cpp
+                    srcs/ex15/ex04.cpp
+                    srcs/ex15/ex05.cpp
+                    srcs/ex15/ex06.cpp
+                    srcs/ex15/ex07.cpp
+                    srcs/ex15/ex08.cpp
+                    srcs/ex15/ex09.cpp
+                    srcs/ex15/ex10.cpp
+                    srcs/ex15/ex11.cpp
+                    srcs/ex15/ex12.cpp
+                    srcs/ex15/ex13.cpp
+        )

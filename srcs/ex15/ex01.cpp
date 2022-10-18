@@ -20,13 +20,14 @@ ft::Vector<K>	linear_combination(const std::vector<ft::Vector<K>>& u, const std:
 			/*
 			 * fma(x, y, z) does x * y + z in one step
 			 */
-			out[i] = std::fma(coefs[n], u[n][i], out[i]);
+//			out[i] = std::fma(coefs[n], u[n][i], out[i]);
+			out[i] = coefs[n] * u[n][i] + out[i];
 		}
 	}
 	return (out);
 }
 
-int main() {
+int test_01() {
 	auto e1 = ft::Vector<std::complex<float>>({1.0if, 0.0if, 0.0if});
 	auto e2 = ft::Vector<std::complex<float>>({0.0if, 1.0if, 0.0if});
 	auto e3 = ft::Vector<std::complex<float>>({0.0if, 0.0if, 1.0if});
@@ -40,11 +41,11 @@ int main() {
 		std::cout << lin_comb1[i] << ' ';
 	}
 	std::cout << "\n";
-	assert(lin_comb1[0] == 10.0 && lin_comb1[1] == -2.0 && lin_comb1[2] == 0.5);
+	assert(lin_comb1[0] == 10.0if && lin_comb1[1] == -2.0if && lin_comb1[2] == 0.5if);
 
-	std::vector<std::complex<float>> coefs2 = {10.0, -2.0};
+	std::vector<std::complex<float>> coefs2 = {10.0if, -2.0if};
 	auto lin_comb2 = linear_combination({v1, v2}, coefs2);
-	assert(lin_comb2[0] == 10.0 && lin_comb2[1] == 0.0);
+	assert(lin_comb2[0] == 10.0if && lin_comb2[1] == 0.0if);
 
 	return (0);
 }

@@ -12,12 +12,19 @@
 #include <iostream>
 #include <iomanip>
 #include "Vector.hpp"
+#include <complex>
 
 
 constexpr double EPSILON = 0.00001;
 bool	feq(double a, double b) {
 	return (fabs(a - b) < EPSILON);
 }
+
+bool	feq(std::complex<float> a, std::complex<float> b) {
+	return (a == b);
+}
+
+std::complex<float>	fma(std::complex<float> x, std::complex<float> y, std::complex<float> z);
 
 namespace ft {
 	struct Shape {
@@ -258,7 +265,7 @@ namespace ft {
 				if (lead >= shape.cols_nb)
 					return (*this);
 				size_t iix = rix;
-				while ((*this)[iix][lead] == 0.0) {
+				while ((*this)[iix][lead] == T()) {
 					iix++;
 					if (iix == shape.rows_nb) {
 						iix = rix;
@@ -334,7 +341,8 @@ namespace ft {
 				auto first = (*this)[0][i];
 				auto minority = this->minor(0, i);
 				auto minority_det = minority.determinant();
-				result = std::fma(sign * first, minority_det, result);
+//				result = std::fma(sign * first, minority_det, result);
+				result += sign * first * minority_det;
 				sign = -sign;
 			}
 			return (result);

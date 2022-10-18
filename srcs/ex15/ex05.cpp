@@ -10,36 +10,36 @@ using namespace std::complex_literals;
 #include <cassert>
 
 
-int main() {
-	auto u = ft::Vector<float>({1.0, 0.0});
-	auto v = ft::Vector<float>({1.0, 0.0});
+int test_05() {
+	auto u = ft::Vector<std::complex<float> >({1.0if, 0.0if});
+	auto v = ft::Vector<std::complex<float> >({1.0if, 0.0if});
 	auto res = ft::angle_cos(u, v);
 	std::cout << res << "\n";
-	assert(feq(res, 1.0));
+	assert(feq(res, 1.0if));
 
-	u = {1.0, 0.0};
-	v = {0.0, 1.0};
+	u = {1.0if, 0.0if};
+	v = {0.0if, 1.0if};
 	res = ft::angle_cos(u, v);
 	std::cout << res << "\n";
-	assert(feq(res, 0.0));
+	assert(feq(res, 0.0if));
 
-	u = {-1.0, 1.0};
-	v = {1.0, -1.0};
+	u = {-1.0if, 1.0if};
+	v = {1.0if, -1.0if};
 	res = ft::angle_cos(u, v);
 	std::cout << res << "\n";
-	assert(feq(res, -1.0));
+	assert(feq(res, -1.0if));
 
-	u = {2.0, 1.0};
-	v = {4.0, 2.0};
+	u = {2.0if, 1.0if};
+	v = {4.0if, 2.0if};
 	res = ft::angle_cos(u, v);
 	std::cout << res << "\n";
-	assert(feq(res, 1.0));
+	assert(feq(res, 1.0if));
 
-	u = {1.0, 2.0, 3.0};
-	v = {4.0, 5.0, 6.0};
+	u = {1.0if, 2.0if, 3.0if};
+	v = {4.0if, 5.0if, 6.0if};
 	res = ft::angle_cos(u, v);
 	std::cout << res << "\n";
-	assert(feq(res, 0.974631846));
+	assert(feq(res, 0.974631846if));
 
 	std::cout << "All done with ex05\n";
 	return (0);
