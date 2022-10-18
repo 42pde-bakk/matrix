@@ -10,7 +10,7 @@ using namespace std::complex_literals;
 #include <cassert>
 
 
-int test_12() {
+int test_ex12() {
 	ft::Matrix<std::complex<float> > u;
 	ft::Matrix<std::complex<float> > inverse;
 

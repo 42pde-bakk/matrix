@@ -10,7 +10,7 @@ using namespace std::complex_literals;
 #include <cassert>
 
 
-void test_06() {
+void test_ex06() {
 	auto u = ft::Vector<std::complex<float> >({0.0if, 0.0if, 1.0if});
 	auto v = ft::Vector<std::complex<float> >({1.0if, 0.0if, 0.0if});
 	auto res = ft::cross_product(u, v);

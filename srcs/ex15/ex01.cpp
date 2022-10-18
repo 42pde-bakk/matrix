@@ -27,7 +27,7 @@ ft::Vector<K>	linear_combination(const std::vector<ft::Vector<K>>& u, const std:
 	return (out);
 }
 
-void test_01() {
+void test_ex01() {
 	auto e1 = ft::Vector<std::complex<float>>({1.0if, 0.0if, 0.0if});
 	auto e2 = ft::Vector<std::complex<float>>({0.0if, 1.0if, 0.0if});
 	auto e3 = ft::Vector<std::complex<float>>({0.0if, 0.0if, 1.0if});

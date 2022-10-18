@@ -11,7 +11,7 @@ using namespace std::complex_literals;
 #include <cassert>
 
 
-int test_09() {
+int test_ex09() {
 	ft::Matrix<std::complex<float> >	m({{1.0if, 2.0if, 3.0if}, {4.0if, 5.0if, 6.0if}, {7.0if, 8.0if, 9.0if}});
 	ft::Matrix<std::complex<float> >	t = m.transpose();
 	std::cout << "Original matrix:\n" << m << '\n';

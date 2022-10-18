@@ -11,7 +11,7 @@ using namespace std::complex_literals;
 #include <iomanip>
 
 
-void test_04() {
+void test_ex04() {
 	auto u = ft::Vector<std::complex<float> >({0.0if, 0.0if, 0.0if});
 	std::cout << u.norm_1() << ", " << u.norm() << ", " << u.norm_inf() << "\n";
 	assert(feq(u.norm(), 0.0if));

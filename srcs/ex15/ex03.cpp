@@ -10,7 +10,7 @@ using namespace std::complex_literals;
 #include <cassert>
 
 
-void test_03() {
+void test_ex03() {
 	auto u = ft::Vector<std::complex<float> >({0.0if, 0.0if});
 	auto v = ft::Vector<std::complex<float> >({1.0if, 1.0if});
 	std::cout << "dot product between {0.0, 0.0} and {1.0, 1.0} gives " << u.dot(v) << "\n";

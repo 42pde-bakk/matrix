@@ -11,7 +11,7 @@ using namespace std::complex_literals;
 #include <cassert>
 
 
-int test_13() {
+int test_ex13() {
 	ft::Matrix<std::complex<float> > u;
 	size_t	rank;
 

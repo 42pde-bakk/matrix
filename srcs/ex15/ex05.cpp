@@ -10,7 +10,7 @@ using namespace std::complex_literals;
 #include <cassert>
 
 
-void test_05() {
+void test_ex05() {
 	auto u = ft::Vector<std::complex<float> >({1.0if, 0.0if});
 	auto v = ft::Vector<std::complex<float> >({1.0if, 0.0if});
 	auto res = ft::angle_cos(u, v);

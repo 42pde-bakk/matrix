@@ -10,7 +10,7 @@ using namespace std::complex_literals;
 #include <cassert>
 
 
-int test_10() {
+int test_ex10() {
 	ft::Matrix<std::complex<float> > u;
 	ft::Matrix<std::complex<float> > echelon;
 	u = {{1.0if, 0.0if, 0.0if},
