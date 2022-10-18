@@ -53,9 +53,8 @@ void	test_mul_mat() {
 	assert(feq(res[1][0], 44.0if) && feq(res[1][1], 22.0if));
 }
 
-int test_07() {
+void test_07() {
 	test_mul_vec();
 	test_mul_mat();
 	std::cout << "All done with ex07\n";
-	return (0);
 }

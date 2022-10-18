@@ -14,17 +14,17 @@
 #include "Vector.hpp"
 #include <complex>
 
-
 constexpr double EPSILON = 0.00001;
-bool	feq(double a, double b) {
-	return (fabs(a - b) < EPSILON);
-}
+bool	feq(double a, double b);
+//bool	feq(float a, float b);
 
-bool	feq(std::complex<float> a, std::complex<float> b) {
+template <typename T>
+bool	feq(std::complex<T> a, std::complex<T> b) {
 	return (a == b);
 }
 
-std::complex<float>	fma(std::complex<float> x, std::complex<float> y, std::complex<float> z);
+template<typename T>
+std::complex<T>	fma(std::complex<T> x, std::complex<T> y, std::complex<T> z);
 
 namespace ft {
 	struct Shape {
@@ -332,8 +332,8 @@ namespace ft {
 			return (sum);
 		}
 		[[nodiscard]] T	determinant() const {
-			double result = 0;
-			int sign = 1;
+			T result = 0;
+			T sign = 1;
 
 			if (shape.rows_nb == 1)
 				return (*this)[0][0];
@@ -445,30 +445,6 @@ namespace ft {
 			}
 		}
 	};
-
-	/*
-	 * ex14 (Bonus)
-	 * https://www.scratchapixel.com/lessons/3d-basic-rendering/perspective-and-orthographic-projection-matrix/building-basic-perspective-projection-matrix
-	 */
-	Matrix<double>	projection(double fov, double ratio, double near, double far) {
-		auto	out = Matrix<double>::identity(4);
-		auto radians = tan(fov / 2);
-		double scale = 1.0 / radians;
-
-		out[0][0] = scale / ratio;
-		out[1][1] = scale;
-		out[2][2] = -(far) / (far - near);
-		out[2][3] = -1;
-		out[3][2] = -(far * near) / (far - near);
-
-		/*
-		 * s/r	0	0	0
-		 * 0	r	0	0
-		 * 0	0	A	-1
-		 * 0	0	B	0
-		 */
-		return (out);
-	}
 }
 
 #endif //MATRIX_MATRIX_HPP

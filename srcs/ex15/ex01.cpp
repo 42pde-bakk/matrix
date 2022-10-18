@@ -27,7 +27,7 @@ ft::Vector<K>	linear_combination(const std::vector<ft::Vector<K>>& u, const std:
 	return (out);
 }
 
-int test_01() {
+void test_01() {
 	auto e1 = ft::Vector<std::complex<float>>({1.0if, 0.0if, 0.0if});
 	auto e2 = ft::Vector<std::complex<float>>({0.0if, 1.0if, 0.0if});
 	auto e3 = ft::Vector<std::complex<float>>({0.0if, 0.0if, 1.0if});
@@ -46,6 +46,4 @@ int test_01() {
 	std::vector<std::complex<float>> coefs2 = {10.0if, -2.0if};
 	auto lin_comb2 = linear_combination({v1, v2}, coefs2);
 	assert(lin_comb2[0] == 10.0if && lin_comb2[1] == 0.0if);
-
-	return (0);
 }

@@ -51,7 +51,7 @@ static void	test_matrix() {
 
 }
 
-int test_00() {
+void test_00() {
 	test_vector();
 	test_matrix();
 }

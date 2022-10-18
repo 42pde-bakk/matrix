@@ -11,11 +11,26 @@
 #include <cmath>
 #include <complex>
 
+//bool	feq(double a, double b);
+//bool	feq(float a, float b);
+
 namespace std {
-	static std::complex<float>	fma(std::complex<float> x, std::complex<float> y, std::complex<float> z) {
+	template <typename T>
+	std::complex<T>	fma(std::complex<T> x, std::complex<T> y, std::complex<T> z) {
 		return (x * y + z);
 	}
 }
+
+template <typename T>
+bool	operator>(std::complex<T> lhs, std::complex<T> rhs) {
+	if (lhs.real() > rhs.real())
+		return (true);
+	else if (lhs.real() < rhs.real())
+		return (false);
+	else
+		return (lhs.imag() > rhs.imag());
+}
+
 
 namespace ft {
 

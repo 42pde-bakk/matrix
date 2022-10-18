@@ -22,7 +22,7 @@ V	lerp(const V& u, const V& v, float t) {
 }
 
 
-int test_02() {
+void test_02() {
 	assert(lerp(0.0if, 1.0if, 0.0) == 0.0if);
 	assert(lerp(0.0if, 1.0if, 1.0) == 1.0if);
 	assert(lerp(0.0if, 1.0if, 0.5) == 0.5if);
