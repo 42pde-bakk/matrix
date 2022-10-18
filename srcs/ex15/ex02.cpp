@@ -38,4 +38,6 @@ void test_ex02() {
 	auto res2 = lerp(matrix1, matrix2, 0.5);
 	assert(res2[0][0] == 11.0if && res2[0][1] == 5.5if);
 	assert(res2[1][0] == 16.5if && res2[1][1] == 22.0if);
+
+	std::cout << "All done with ex02\n";
 }
