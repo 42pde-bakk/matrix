@@ -298,6 +298,7 @@ namespace ft {
 			for (size_t i = 0; i < n; i++) {
 				out[i].resize(n, 0);
 			}
+			out.set_shape();
 			return (out);
 		}
 
@@ -335,15 +336,21 @@ namespace ft {
 			T result = 0;
 			T sign = 1;
 
+			if (shape.rows_nb != shape.cols_nb)
+				throw std::runtime_error("Bad shape given to Matrix::determinant()");
 			if (shape.rows_nb == 1)
 				return (*this)[0][0];
+			else if (shape.rows_nb == 2) {
+				return ((*this)[0][0] * (*this)[1][1] - (*this)[0][1] * (*this)[1][0]);
+			}
+
 			for (size_t i = 0; i < shape.rows_nb; i++) {
 				auto first = (*this)[0][i];
-				auto minority = this->minor(0, i);
-				auto minority_det = minority.determinant();
+				Matrix minority = this->minor(0, i);
+				T minority_det = minority.determinant();
 //				result = std::fma(sign * first, minority_det, result);
 				result += sign * first * minority_det;
-				sign = -sign;
+;				sign = -sign;
 			}
 			return (result);
 		}
