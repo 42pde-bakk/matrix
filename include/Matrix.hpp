@@ -14,7 +14,8 @@
 #include "Vector.hpp"
 #include <complex>
 
-constexpr double EPSILON = 0.00001;
+
+constexpr float EPSILON = 0.00001;
 bool	feq(double a, double b);
 //bool	feq(float a, float b);
 
@@ -25,6 +26,31 @@ bool	feq(std::complex<T> a, std::complex<T> b) {
 
 template<typename T>
 std::complex<T>	fma(std::complex<T> x, std::complex<T> y, std::complex<T> z);
+
+template<typename T>
+bool operator>(const std::complex<T> lhs, const float rhs) {
+	return (lhs.real() > rhs);
+}
+
+template<typename T>
+bool operator<(const std::complex<T> lhs, std::complex<T> rhs) {
+	if (lhs.real() < rhs.real())
+		return (true);
+	else
+		return (lhs.imag() < rhs.imag());
+}
+
+template<typename T>
+bool operator<(const std::complex<T> lhs, const float rhs) {
+	return (lhs.real() < rhs);
+}
+
+
+template<typename T>
+inline T my_abs(T x) {
+	return (x < T(0)) ? -x : x;
+}
+
 
 namespace ft {
 	struct Shape {
@@ -411,7 +437,7 @@ namespace ft {
 			for (size_t i = 0; i < shape.cols_nb; i++) {
 				size_t j;
 				for (j = 0; j < shape.rows_nb; j++) {
-					if (!row_selected[j] && fabs(copy[j][i]) > EPSILON)
+					if (!row_selected[j] && my_abs(copy[j][i]) > EPSILON)
 						break ;
 				}
 				if (j != shape.rows_nb) {
@@ -421,7 +447,7 @@ namespace ft {
 						copy[j][p] /= copy[j][i];
 					}
 					for (size_t k = 0; k < shape.rows_nb; k++) {
-						if (k != j && fabs(copy[k][i]) > EPSILON) {
+						if (k != j && my_abs(copy[k][i]) > EPSILON) {
 							for (size_t p = i + 1; p < shape.cols_nb; p++) {
 								copy[k][p] = std::fma(-copy[j][p], copy[k][i], copy[k][p]);
 							}
