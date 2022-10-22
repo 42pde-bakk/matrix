@@ -9,6 +9,28 @@
 #include <ostream>
 #include <iostream>
 #include <cmath>
+#include <complex>
+
+//bool	feq(double a, double b);
+//bool	feq(float a, float b);
+
+namespace std {
+	template <typename T>
+	std::complex<T>	fma(std::complex<T> x, std::complex<T> y, std::complex<T> z) {
+		return (x * y + z);
+	}
+}
+
+template <typename T>
+bool	operator>(std::complex<T> lhs, std::complex<T> rhs) {
+	if (lhs.real() > rhs.real())
+		return (true);
+	else if (lhs.real() < rhs.real())
+		return (false);
+	else
+		return (lhs.imag() > rhs.imag());
+}
+
 
 namespace ft {
 
@@ -116,7 +138,7 @@ namespace ft {
 			T max_item = T();
 
 			for (auto& item : *this) {
-				const T item_abs = fabs(item);
+				T item_abs = std::abs(item);
 				if (item_abs > max_item)
 					max_item = item_abs;
 			}

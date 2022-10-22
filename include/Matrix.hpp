@@ -12,12 +12,45 @@
 #include <iostream>
 #include <iomanip>
 #include "Vector.hpp"
+#include <complex>
 
 
-constexpr double EPSILON = 0.00001;
-bool	feq(double a, double b) {
-	return (fabs(a - b) < EPSILON);
+constexpr float EPSILON = 0.00001;
+bool	feq(double a, double b);
+//bool	feq(float a, float b);
+
+template <typename T>
+bool	feq(std::complex<T> a, std::complex<T> b) {
+	return (a == b);
 }
+
+template<typename T>
+std::complex<T>	fma(std::complex<T> x, std::complex<T> y, std::complex<T> z);
+
+template<typename T>
+bool operator>(const std::complex<T> lhs, const float rhs) {
+	return (lhs.real() > rhs);
+}
+
+template<typename T>
+bool operator<(const std::complex<T> lhs, std::complex<T> rhs) {
+	if (lhs.real() < rhs.real())
+		return (true);
+	else
+		return (lhs.imag() < rhs.imag());
+}
+
+template<typename T>
+bool operator<(const std::complex<T> lhs, const float rhs) {
+	return (lhs.real() < rhs);
+}
+
+
+template<typename T>
+inline T my_abs(T x) {
+	return (x < T(0)) ? -x : x;
+}
+
 
 namespace ft {
 	struct Shape {
@@ -258,7 +291,7 @@ namespace ft {
 				if (lead >= shape.cols_nb)
 					return (*this);
 				size_t iix = rix;
-				while ((*this)[iix][lead] == 0.0) {
+				while ((*this)[iix][lead] == T()) {
 					iix++;
 					if (iix == shape.rows_nb) {
 						iix = rix;
@@ -291,6 +324,7 @@ namespace ft {
 			for (size_t i = 0; i < n; i++) {
 				out[i].resize(n, 0);
 			}
+			out.set_shape();
 			return (out);
 		}
 
@@ -325,17 +359,24 @@ namespace ft {
 			return (sum);
 		}
 		[[nodiscard]] T	determinant() const {
-			double result = 0;
-			int sign = 1;
+			T result = 0;
+			T sign = 1;
 
+			if (shape.rows_nb != shape.cols_nb)
+				throw std::runtime_error("Bad shape given to Matrix::determinant()");
 			if (shape.rows_nb == 1)
 				return (*this)[0][0];
+			else if (shape.rows_nb == 2) {
+				return ((*this)[0][0] * (*this)[1][1] - (*this)[0][1] * (*this)[1][0]);
+			}
+
 			for (size_t i = 0; i < shape.rows_nb; i++) {
 				auto first = (*this)[0][i];
-				auto minority = this->minor(0, i);
-				auto minority_det = minority.determinant();
-				result = std::fma(sign * first, minority_det, result);
-				sign = -sign;
+				Matrix minority = this->minor(0, i);
+				T minority_det = minority.determinant();
+//				result = std::fma(sign * first, minority_det, result);
+				result += sign * first * minority_det;
+;				sign = -sign;
 			}
 			return (result);
 		}
@@ -396,7 +437,7 @@ namespace ft {
 			for (size_t i = 0; i < shape.cols_nb; i++) {
 				size_t j;
 				for (j = 0; j < shape.rows_nb; j++) {
-					if (!row_selected[j] && fabs(copy[j][i]) > EPSILON)
+					if (!row_selected[j] && my_abs(copy[j][i]) > EPSILON)
 						break ;
 				}
 				if (j != shape.rows_nb) {
@@ -406,7 +447,7 @@ namespace ft {
 						copy[j][p] /= copy[j][i];
 					}
 					for (size_t k = 0; k < shape.rows_nb; k++) {
-						if (k != j && fabs(copy[k][i]) > EPSILON) {
+						if (k != j && my_abs(copy[k][i]) > EPSILON) {
 							for (size_t p = i + 1; p < shape.cols_nb; p++) {
 								copy[k][p] = std::fma(-copy[j][p], copy[k][i], copy[k][p]);
 							}
@@ -437,30 +478,6 @@ namespace ft {
 			}
 		}
 	};
-
-	/*
-	 * ex14 (Bonus)
-	 * https://www.scratchapixel.com/lessons/3d-basic-rendering/perspective-and-orthographic-projection-matrix/building-basic-perspective-projection-matrix
-	 */
-	Matrix<double>	projection(double fov, double ratio, double near, double far) {
-		auto	out = Matrix<double>::identity(4);
-		auto radians = tan(fov / 2);
-		double scale = 1.0 / radians;
-
-		out[0][0] = scale / ratio;
-		out[1][1] = scale;
-		out[2][2] = -(far) / (far - near);
-		out[2][3] = -1;
-		out[3][2] = -(far * near) / (far - near);
-
-		/*
-		 * s/r	0	0	0
-		 * 0	r	0	0
-		 * 0	0	A	-1
-		 * 0	0	B	0
-		 */
-		return (out);
-	}
 }
 
 #endif //MATRIX_MATRIX_HPP

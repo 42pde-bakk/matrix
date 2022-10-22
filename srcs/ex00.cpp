@@ -45,7 +45,6 @@ void	test_matrix() {
 	std::cout << u << "\n";
 	assert(u[0][0] == 2.0 && u[0][1] == 4.0);
 	assert(u[1][0] == 6.0 && u[1][1] == 8.0);
-
 }
 
 int main() {

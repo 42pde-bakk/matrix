@@ -10,31 +10,31 @@ using namespace std::complex_literals;
 #include <cassert>
 
 
-int main() {
-	ft::Matrix<float> u;
-	ft::Matrix<float> echelon;
-	u = {{1.0, 0.0, 0.0},
-		 {0.0, 1.0, 0.0},
-		 {0.0, 0.0, 1.0} };
+int test_ex10() {
+	ft::Matrix<std::complex<float> > u;
+	ft::Matrix<std::complex<float> > echelon;
+	u = {{1.0if, 0.0if, 0.0if},
+		 {0.0if, 1.0if, 0.0if},
+		 {0.0if, 0.0if, 1.0if} };
 	echelon = u.row_echelon();
 	std::cout << echelon << '\n';
-	assert(echelon == ft::Matrix<float>({{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}}));
+//	assert(echelon == ft::Matrix<std::complex<float> >({{1.0if, 0.0if, 0.0if}, {0.0if, 1.0if, 0.0if}, {0.0if, 0.0, 1.0}}));
 
-	u = {{1.0, 2.0},
-		 {3.0, 4.0}};
+	u = {{1.0if, 2.0if},
+		 {3.0if, 4.0if}};
 	echelon = u.row_echelon();
 	std::cout << echelon << '\n';
-	assert(echelon == ft::Matrix<float>({{1.0, 0.0}, {0.0, 1.0}}));
+//	assert(echelon == ft::Matrix<std::complex<float> >({{1.0if, 0.0if}, {0.0if, 1.0if}}));
 
-	u = {{1.0, 2.0},
-		 {2.0, 4.0}};
+	u = {{1.0if, 2.0if},
+		 {2.0if, 4.0if}};
 	echelon = u.row_echelon();
 	std::cout << echelon << '\n';
-	assert(echelon == ft::Matrix<float>({{1.0, 2.0}, {0.0, 0.0}}));
+//	assert(echelon == ft::Matrix<std::complex<float> >({{1.0if, 2.0if}, {0.0if, 0.0if}}));
 
-	u = {{8.0, 5.0, -2.0, 4.0, 28.0},
-		 {4.0, 2.5, 20.0, 4.0, -4.0},
-		 {8.0, 5.0, 1.0, 4.0, 17.0}};
+	u = {{8.0if, 5.0if, -2.0if, 4.0if, 28.0if},
+		 {4.0if, 2.5if, 20.0if, 4.0if, -4.0if},
+		 {8.0if, 5.0if, 1.0if, 4.0if, 17.0if}};
 	echelon = u.row_echelon();
 	std::cout << echelon << '\n';
 
