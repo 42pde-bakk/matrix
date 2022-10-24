@@ -47,6 +47,16 @@ namespace ft {
 			return (*this);
 		}
 
+		bool	operator==(const Vector& rhs) const {
+			if (this->size() != rhs.size())
+				return (false);
+			for (size_t i = 0; i < this->size(); i++) {
+				if ((*this)[i] != rhs[i])
+					return (false);
+			}
+			return (true);
+		}
+
 		/*
 		 * ex00
 		 */
