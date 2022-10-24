@@ -118,6 +118,69 @@ void	test_matrix() {
 	std::cout << u << "\n";
 	assert(u[0][0] == 2.0 && u[0][1] == 4.0);
 	assert(u[1][0] == 6.0 && u[1][1] == 8.0);
+
+	/*
+	 * Tests from the evalsheet:
+	 */
+	std::cout << "Correction:\n\n";
+	std::cout << "Add:\n";
+	u = {{0, 0}, {0, 0}};
+	v = {{0, 0}, {0, 0}};
+	u.add(v);
+	assert(u == ft::Matrix<float>({{0, 0}, {0, 0}}));
+
+	u = {{1, 0}, {0, 1}};
+	v = {{0, 0}, {0, 0}};
+	u.add(v);
+	assert(u == ft::Matrix<float>({{1, 0}, {0, 1}}));
+
+	u = {{1, 1}, {1, 1}};
+	v = {{1, 1}, {1, 1}};
+	u.add(v);
+	assert(u == ft::Matrix<float>({{2, 2}, {2, 2}}));
+
+	u = {{21, 21}, {21, 21}};
+	v = {{21, 21}, {21, 21}};
+	u.add(v);
+	assert(u == ft::Matrix<float>({{42, 42}, {42, 42}}));
+
+	std::cout << "Subtract:\n";
+	u = {{0, 0}, {0, 0}};
+	v = {{0, 0}, {0, 0}};
+	u.sub(v);
+	assert(u == ft::Matrix<float>({{0, 0}, {0, 0}}));
+
+	u = {{1, 0}, {0, 1}};
+	v = {{0, 0}, {0, 0}};
+	u.sub(v);
+	assert(u == ft::Matrix<float>({{1, 0}, {0, 1}}));
+
+	u = {{1, 1}, {1, 1}};
+	v = {{1, 1}, {1, 1}};
+	u.sub(v);
+	assert(u == ft::Matrix<float>({{0, 0}, {0, 0}}));
+
+	u = {{21, 21}, {21, 21}};
+	v = {{21, 21}, {21, 21}};
+	u.sub(v);
+	assert(u == ft::Matrix<float>({{0, 0}, {0, 0}}));
+
+	std::cout << "Multiply:\n";
+	u = {{0, 0}, {0, 0}};
+	u.scl(0);
+	assert(u == ft::Matrix<float>({{0, 0}, {0, 0}}));
+
+	u = {{1, 0}, {0, 1}};
+	u.scl(1);
+	assert(u == ft::Matrix<float>({{1, 0}, {0, 1}}));
+
+	u = {{1, 2}, {3, 4}};
+	u.scl(2);
+	assert(u == ft::Matrix<float>({{2, 4}, {6, 8}}));
+
+	u = {{21, 21}, {21, 21}};
+	u.scl(0.5);
+	assert(u == ft::Matrix<float>({{10.5, 10.5}, {10.5, 10.5}}));
 }
 
 int main() {
