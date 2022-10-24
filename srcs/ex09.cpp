@@ -19,6 +19,21 @@ int main() {
 		}
 	}
 
+	m = {{0.0, 0.0}, {0.0, 0.0}};
+	assert(m.transpose() == ft::Matrix<float>({{0.0, 0.0}, {0.0, 0.0}}));
+
+	m = {{1.0, 0.0}, {0.0, 1.0}};
+	assert(m.transpose() == ft::Matrix<float>({{1.0, 0.0}, {0.0, 1.0}}));
+
+	m = {{1.0, 2.0}, {3.0, 4.0}};
+	assert(m.transpose() == ft::Matrix<float>({{1.0, 3.0}, {2.0, 4.0}}));
+
+	m = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}};
+	assert(m.transpose() == ft::Matrix<float>({{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}}));
+
+	m = {{1.0, 2.0}, {3.0, 4.0}, {5.0, 6.0}};
+	assert(m.transpose() == ft::Matrix<float>({{1.0, 3.0, 5.0}, {2.0, 4.0, 6.0}}));
+
 	std::cout << "All done with ex09\n";
 	return (0);
 }

@@ -38,6 +38,32 @@ int main() {
 	std::cout << res << "\n";
 	assert(feq(res, 0.974631846));
 
+	// Tests from the evalsheet
+	u = {1.0, 0.0};
+	v = {0.0, 1.0};
+	res = ft::angle_cos(u, v);
+	assert(feq(res, 0.0));
+
+	u = {8.0, 7.0};
+	v = {3.0, 2.0};
+	res = ft::angle_cos(u, v);
+	assert(feq(res, 0.9914542955425437));
+
+	u = {1.0, 1.0};
+	v = {1.0, 1.0};
+	res = ft::angle_cos(u, v);
+	assert(feq(res, 1.0));
+
+	u = {4.0, 2.0};
+	v = {1.0, 1.0};
+	res = ft::angle_cos(u, v);
+	assert(feq(res, 0.9486832980505138));
+
+	u = {-7.0, 3.0};
+	v = {6.0, 4.0};
+	res = ft::angle_cos(u, v);
+	assert(feq(res, -0.5462677805469223));
+
 	std::cout << "All done with ex05\n";
 	return (0);
 }

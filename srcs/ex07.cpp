@@ -50,9 +50,44 @@ void	test_mul_mat() {
 	assert(feq(res[1][0], 44.0) && feq(res[1][1], 22.0));
 }
 
+void	evalsheet_tests() {
+	/*
+	 * Tests from the evalsheet
+	 */
+	ft::Matrix<float>	m({{0.0, 0.0}, {0.0, 0.0}});
+
+	ft::Vector<float> res = m.mul_vec(ft::Vector<float>({8.0, 2.0}));
+	// The function must always return vectors with only zeros in it.
+	for (size_t i = 0; i < res.size(); i++) {
+		assert(res[i] == 0.0);
+	}
+
+	m = {{1.0, 0.0}, {0.0, 1.0}};
+	ft::Vector<float>	v({8.0, 2.0});
+	res = m.mul_vec(v);
+	// The function must always return the same vector as given in the parameter.
+	assert(res == v);
+
+	m = {{1.0, 1.0}, {1.0, 1.0}};
+	res = m.mul_vec(ft::Vector<float>({4.0, 2.0}));
+	assert(res == ft::Vector<float>({6.0, 6.0}));
+
+	m = {{2.0, 0.0}, {0.0, 2.0}};
+	res = m.mul_vec(ft::Vector<float>({2.0, 1.0}));
+	assert(res == ft::Vector<float>({4.0, 2.0}));
+
+	m = {{0.5, 0.0}, {0.0, 0.5}};
+	res = m.mul_vec(ft::Vector<float>({4.0, 2.0}));
+	assert(res == ft::Vector<float>({2.0, 1.0}));
+}
+
 int main() {
+	/*
+	 * https://upload.wikimedia.org/wikipedia/commons/e/eb/Matrix_multiplication_diagram_2.svg
+	 */
 	test_mul_vec();
 	test_mul_mat();
+	evalsheet_tests();
 	std::cout << "All done with ex07\n";
 	return (0);
 }

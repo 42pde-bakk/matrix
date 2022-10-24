@@ -6,10 +6,12 @@
 #include "Vector.hpp"
 #include <cassert>
 
+/*
+ * Return a point on the line between u and v
+ * if t == 0, return u, if t == 1 return v
+ */
 template <typename V>
 V	lerp(const V& u, const V& v, float t) {
-	if (t < 0.0 || t > 1.0)
-		return V();
 	V out = (u + (v - u) * t);
 	// Implementing this to use Fused Multiply Accumulate is easy enough for floats
 	// But I don't know how to handle it for Vectors or Matrices like:

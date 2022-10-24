@@ -246,6 +246,12 @@ namespace ft {
 		 * ex08
 		 */
 		[[nodiscard]] T	trace() const {
+			/*
+			 * In linear algebra,
+			 * the trace of a square matrix is defined to be the sum of elements on the main diagonal
+			 * (from the upper left to the lower right) of A.
+			 * The trace is only defined for a square matrix (n × n).
+			 */
 			T total = T();
 			if (shape.rows_nb != shape.cols_nb)
 				return (total);
@@ -259,11 +265,17 @@ namespace ft {
 		 * ex09
 		 */
 		[[nodiscard]] Matrix	transpose() const {
-			Matrix	out(*this);
+			Matrix	out;
+
+			out.resize(this->shape.cols_nb);
+			for (size_t i = 0; i < this->shape.cols_nb; i++) {
+				out[i].resize(this->shape.rows_nb);
+			}
+			out.set_shape();
 
 			for (size_t i = 0; i < shape.rows_nb; i++) {
 				for (size_t j = 0; j < shape.cols_nb; j++) {
-					out[i][j] = (*this)[j][i];
+					out[j][i] = (*this)[i][j];
 				}
 			}
 			return (out);
@@ -284,6 +296,21 @@ namespace ft {
 			}
 		}
 		Matrix	row_echelon() {
+			/*
+			 * Row echelon form:
+			 * The first number in the row (called a leading coefficient) is 1.
+			 * Every leading 1 is to the right of the one above it.
+			 * Any non-zero rows are always above rows with all zeros.
+			 */
+
+			/*
+			 * Reduced row echelon form:
+			 * The first non-zero number in the first row (the leading entry) is the number 1.
+			 * The second row also starts with the number 1, which is further to the right than the leading entry in the first row.
+			 * For every subsequent row, the number 1 must be further to the right.
+			 * The leading entry in each row must be the only non-zero number in its column.
+			 * Any non-zero rows are placed at the bottom of the matrix.
+			 */
 			size_t lead = 0;
 
 			for (size_t rix = 0; rix < shape.rows_nb; rix++) {
@@ -358,6 +385,10 @@ namespace ft {
 			return (sum);
 		}
 		[[nodiscard]] T	determinant() const {
+			/*
+			 * if nonzero, the matrix is invertible.
+			 * The determinant of a matrix is the factor by which areas are scaled by this matrix.
+			 */
 			T result = 0;
 			T sign = 1;
 
@@ -415,6 +446,8 @@ namespace ft {
 			if (this->shape.rows_nb != shape.cols_nb)
 				throw std::runtime_error("bad matrix for inverse");
 			const T det = this->determinant();
+			if (det == 0)
+				throw std::runtime_error("Matrix with determinant 0 is not invertible");
 			for (size_t rownb = 0; rownb < shape.rows_nb; rownb++) {
 				for (size_t colnb = 0; colnb < shape.cols_nb; colnb++) {
 					T first = (*this)[(rownb + 1) % 3][(colnb + 1) % 3] * (*this)[(rownb + 2) % 3][(colnb + 2) % 3];
@@ -429,6 +462,10 @@ namespace ft {
 		 * ex13
 		 */
 		[[nodiscard]] size_t	rank() const {
+			/*
+			 * a matrix's rank is the amount of linearly independent columns
+			 * : the dimension of vector space spanned by its rows
+			 */
 			Matrix	copy(*this);
 			size_t rank = 0;
 			std::vector<bool>	row_selected(shape.rows_nb, false);

@@ -156,6 +156,8 @@ namespace ft {
 		 * ex05
 		 */
 		T	angle_cos(const Vector& rhs) const {
+			// https://www.youtube.com/watch?v=2pIlGSu6Ta4
+			// https://www.geeksforgeeks.org/cosine-similarity/
 			return this->dot(rhs) / (this->norm() * rhs.norm());
 		}
 

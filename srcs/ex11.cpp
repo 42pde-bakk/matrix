@@ -48,6 +48,35 @@ int main() {
 		std::cout << "fourth and last determinant is " << determinant << "\n";
 		assert(feq(determinant, 1032.0));
 	}
+
+	/*
+	 * Tests from the evalsheet
+	 */
+	ft::Matrix<float>	u;
+	u = {{0.0, 0.0}, {0.0, 0.0}};
+	assert(u.determinant() == 0.0);
+
+	u = {{1.0, 0.0}, {0.0, 1.0}};
+	assert(u.determinant() == 1.0);
+
+	u = {{2.0, 0.0}, {0.0, 2.0}};
+	assert(u.determinant() == 4.0);
+
+	u = {{1.0, 1.0}, {1.0, 1.0}};
+	assert(u.determinant() == 0.0);
+
+	u = {{0.0, 1.0}, {1.0, 0.0}};
+	assert(u.determinant() == -1.0);
+
+	u = {{1.0, 2.0}, {3.0, 4.0}};
+	assert(u.determinant() == -2.0);
+
+	u = {{-7.0, 5.0}, {4.0, 6.0}};
+	assert(u.determinant() == -62.0);
+
+	u = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}};
+	assert(u.determinant() == 1.0);
+
 	std::cout << "All done with ex11\n";
 	return (0);
 }

@@ -34,6 +34,34 @@ int main() {
 	std::cout << "rank is " << rank << "\n";
 	assert(rank == 3);
 
+	/*
+	 * Tests from the evalsheet
+	 */
+
+	u = {{0.0, 0.0}, {0.0, 0.0}};
+	assert(u.rank() == 0.0);
+
+	u = {{1.0, 0.0}, {0.0, 1.0}};
+	assert(u.rank() == 2.0);
+
+	u = {{2.0, 0.0}, {0.0, 2.0}};
+	assert(u.rank() == 2.0);
+
+	u = {{1.0, 1.0}, {1.0, 1.0}};
+	assert(u.rank() == 1.0);
+
+	u = {{0.0, 1.0}, {1.0, 0.0}};
+	assert(u.rank() == 2.0);
+
+	u = {{1.0, 2.0}, {3.0, 4.0}};
+	assert(u.rank() == 2.0);
+
+	u = {{-7.0, 5.0}, {4.0, 6.0}};
+	assert(u.rank() == 2.0);
+
+	u = {{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}};
+	assert(u.rank() == 3.0);
+
 	std::cout << "All done with ex13\n";
 	return (0);
 }

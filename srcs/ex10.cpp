@@ -35,6 +35,33 @@ int main() {
 	echelon = u.row_echelon();
 	std::cout << echelon << '\n';
 
+	/*
+	 * Tests from the evalsheet
+	 */
+	u = {{0.0, 0.0}, {0.0, 0.0}};
+	echelon = u.row_echelon();
+	assert(echelon == ft::Matrix<float>({{0.0, 0.0}, {0.0, 0.0}}));
+
+	u = {{1.0, 0.0}, {0.0, 1.0}};
+	echelon = u.row_echelon();
+	assert(echelon == ft::Matrix<float>({{1.0, 0.0}, {0.0, 1.0}}));
+
+	u = {{4.0, 2.0}, {2.0, 1.0}};
+	echelon = u.row_echelon();
+	assert(echelon == ft::Matrix<float>({{1.0, 0.5}, {0.0, 0.0}}));
+
+	u = {{-7.0, 2.0}, {4.0, 8.0}};
+	echelon = u.row_echelon();
+	assert(echelon == ft::Matrix<float>({{1.0, 0.0}, {0.0, 1.0}}));
+
+	u = {{0.0, 0.0}, {0.0, 0.0}};
+	echelon = u.row_echelon();
+	assert(echelon == ft::Matrix<float>({{0.0, 0.0}, {0.0, 0.0}}));
+
+	u = {{1.0, 2.0}, {4.0, 8.0}};
+	echelon = u.row_echelon();
+	assert(echelon == ft::Matrix<float>({{1.0, 2.0}, {0.0, 0.0}}));
+
 	std::cout << "All done with ex10\n";
 	return (0);
 }

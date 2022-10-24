@@ -11,6 +11,7 @@ template <typename K>
 ft::Vector<K>	linear_combination(const std::vector<ft::Vector<K>>& u, const std::vector<K>& coefs) {
 	/*
 	 * this function adds together (coefs[i] * u[i]) for i < coefs.size()
+	 * https://www.mathbootcamps.com/linear-combinations-vectors/
 	 */
 	if (u.empty() || u.size() != coefs.size()) {
 		std::cerr << "u.size != coefs.size\n";
