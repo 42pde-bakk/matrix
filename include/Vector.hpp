@@ -11,9 +11,6 @@
 #include <cmath>
 #include <complex>
 
-//bool	feq(double a, double b);
-//bool	feq(float a, float b);
-
 namespace std {
 	template <typename T>
 	std::complex<T>	fma(std::complex<T> x, std::complex<T> y, std::complex<T> z) {

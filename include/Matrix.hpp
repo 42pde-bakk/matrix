@@ -17,7 +17,6 @@
 
 constexpr float EPSILON = 0.00001;
 bool	feq(double a, double b);
-//bool	feq(float a, float b);
 
 template <typename T>
 bool	feq(std::complex<T> a, std::complex<T> b) {
