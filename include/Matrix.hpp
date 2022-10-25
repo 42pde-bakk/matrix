@@ -295,6 +295,28 @@ namespace ft {
 				(*this)[row_idx][i] /= lead_elem;
 			}
 		}
+		Matrix	row_reduce() {
+			size_t lead = 0;
+
+			while (lead < this->shape.rows_nb) {
+
+				for (size_t r = 0; r < this->shape.rows_nb; r++) {
+					/* Calculate divisor and multiplier */
+					T	divisor = (*this)[lead][lead];
+					T	multiplier = (*this)[r][lead] / divisor;
+
+					for (size_t c = 0; c < this->shape.cols_nb; c++) {
+						if (r == lead) {
+							(*this)[r][c] /= divisor; /* Make pivot = 1 */
+						} else {
+							(*this)[r][c] -= (*this)[lead][c] * multiplier; /* Make other = 0 */
+						}
+					}
+				}
+				++lead;
+			}
+			return (*this);
+		}
 		Matrix	row_echelon() {
 			/*
 			 * Row echelon form:
@@ -397,7 +419,7 @@ namespace ft {
 			if (shape.rows_nb == 1)
 				return (*this)[0][0];
 			else if (shape.rows_nb == 2) {
-				return ((*this)[0][0] * (*this)[1][1] - (*this)[0][1] * (*this)[1][0]);
+				return ((*this)[0][0] * (*this)[1][1] - ((*this)[0][1] * (*this)[1][0]));
 			}
 
 			for (size_t i = 0; i < shape.rows_nb; i++) {
@@ -421,6 +443,12 @@ namespace ft {
 			}
 			return (out);
 		}
+		void	augment() {
+			Matrix identity = Matrix::identity(this->shape.rows_nb);
+			for (size_t i = 0; i < this->shape.rows_nb; i++) {
+				(*this)[i].insert((*this)[i].end(), identity[i].begin(), identity[i].end());
+			}
+		}
 		[[nodiscard]] Matrix	hstack(const Matrix& rhs) const {
 			Matrix	out(*this);
 
@@ -440,14 +468,38 @@ namespace ft {
 			return (out);
 		}
 
+		void	add_scl(size_t dst, size_t src, float scl) {
+			for (size_t i = 0; i < (*this)[dst].size(); i++) {
+				(*this)[dst][i] += scl * (*this)[src][i];
+			}
+		}
+
+		[[nodiscard]] Matrix	adjoint_2by2() const {
+			Matrix	adj(*this);
+
+			std::swap(adj[0][0], adj[1][1]);
+			adj[0][1] *= -1;
+			adj[1][0] *= -1;
+			return (adj);
+		}
+		[[nodiscard]] Matrix	inverse_2by2() const {
+			T	det = this->determinant();
+			Matrix	adj = this->adjoint_2by2();
+
+			return (adj * (T(1.0) / det));
+		}
+
 		[[nodiscard]] Matrix	inverse() const {
 			Matrix	out(*this);
 
 			if (this->shape.rows_nb != shape.cols_nb)
 				throw std::runtime_error("bad matrix for inverse");
+			if (this->shape.rows_nb == 2)
+				return (this->inverse_2by2());
 			const T det = this->determinant();
-			if (det == 0)
+			if (det == T(0))
 				throw std::runtime_error("Matrix with determinant 0 is not invertible");
+
 			for (size_t rownb = 0; rownb < shape.rows_nb; rownb++) {
 				for (size_t colnb = 0; colnb < shape.cols_nb; colnb++) {
 					T first = (*this)[(rownb + 1) % 3][(colnb + 1) % 3] * (*this)[(rownb + 2) % 3][(colnb + 2) % 3];

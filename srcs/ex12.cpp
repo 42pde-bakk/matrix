@@ -44,7 +44,7 @@ int main() {
 
 	u = {{1.0, 0.0}, {0.0, 1.0}};
 	auto v = u.inverse();
-	std::cout << v << "\n";
+
 	assert(u.inverse() == ft::Matrix<float>({{1.0, 0.0}, {0.0, 1.0}}));
 
 	u = {{2.0, 0.0}, {0.0, 2.0}};
