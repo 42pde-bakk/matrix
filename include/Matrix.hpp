@@ -495,8 +495,8 @@ namespace ft {
 
 			if (this->shape.rows_nb != shape.cols_nb)
 				throw std::runtime_error("bad matrix for inverse");
-//			if (this->shape.rows_nb == 2)
-//				return (this->inverse_2by2());
+			if (this->shape.rows_nb == 2)
+				return (this->inverse_2by2());
 			const T det = this->determinant();
 			if (det == T(0))
 				throw std::runtime_error("Matrix with determinant 0 is not invertible");
@@ -504,17 +504,12 @@ namespace ft {
 			out.augment();
 
 			/* Applying Gauss Jordan Elimination */
-			for (size_t i = 0; i < shape.rows_nb; i++) {
-				if (out[i][i] == 0) {
-					continue;
-					std::cerr << "i=" << i << "\n" << out << "\n";
-					throw std::runtime_error("cant be 0");
-				}
-				for (size_t j = 0; j < shape.rows_nb; j++) {
-					if (i != j) {
-						T ratio = out[j][i] / out[i][i];
+			for (size_t row = 0; row < shape.rows_nb; row++) {
+				for (size_t col = 0; col < shape.cols_nb; col++) {
+					if (row != col) {
+						T ratio = out[col][row] / out[row][row];
 						for (size_t k = 0; k < out.shape.cols_nb; k++) {
-							out[j][k] = out[j][k] - ratio * out[i][k];
+							out[col][k] = out[col][k] - ratio * out[row][k];
 						}
 					}
 				}
