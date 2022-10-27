@@ -26,6 +26,30 @@ int main() {
 	std::cout << res << '\n';
 	assert(feq(res, -21.0));
 
+	/*
+	 * Tests from the evalsheet
+	 */
+
+	u = ft::Matrix<float>({{0.0, 0.0}, {0.0, 0.0}});
+	res = u.trace();
+	assert(res == 0.0);
+
+	u = ft::Matrix<float>({{1.0, 0.0}, {0.0, 1.0}});
+	res = u.trace();
+	assert(res == 2.0);
+
+	u = ft::Matrix<float>({{1.0, 2.0}, {3.0, 4.0}});
+	res = u.trace();
+	assert(res == 5.0);
+
+	u = ft::Matrix<float>({{8.0, -7.0}, {4.0, 2.0}});
+	res = u.trace();
+	assert(res == 10.0);
+
+	u = ft::Matrix<float>({{1.0, 0.0, 0.0}, {0.0, 1.0, 0.0}, {0.0, 0.0, 1.0}});
+	res = u.trace();
+	assert(res == 3.0);
+
 	std::cout << "All done with ex08\n";
 	return (0);
 }

@@ -246,6 +246,12 @@ namespace ft {
 		 * ex08
 		 */
 		[[nodiscard]] T	trace() const {
+			/*
+			 * In linear algebra,
+			 * the trace of a square matrix is defined to be the sum of elements on the main diagonal
+			 * (from the upper left to the lower right) of A.
+			 * The trace is only defined for a square matrix (n × n).
+			 */
 			T total = T();
 			if (shape.rows_nb != shape.cols_nb)
 				return (total);
@@ -259,11 +265,17 @@ namespace ft {
 		 * ex09
 		 */
 		[[nodiscard]] Matrix	transpose() const {
-			Matrix	out(*this);
+			Matrix	out;
+
+			out.resize(this->shape.cols_nb);
+			for (size_t i = 0; i < this->shape.cols_nb; i++) {
+				out[i].resize(this->shape.rows_nb);
+			}
+			out.set_shape();
 
 			for (size_t i = 0; i < shape.rows_nb; i++) {
 				for (size_t j = 0; j < shape.cols_nb; j++) {
-					out[i][j] = (*this)[j][i];
+					out[j][i] = (*this)[i][j];
 				}
 			}
 			return (out);
@@ -283,7 +295,44 @@ namespace ft {
 				(*this)[row_idx][i] /= lead_elem;
 			}
 		}
+		Matrix	row_reduce() {
+			size_t lead = 0;
+
+			while (lead < this->shape.rows_nb) {
+
+				for (size_t r = 0; r < this->shape.rows_nb; r++) {
+					/* Calculate divisor and multiplier */
+					T	divisor = (*this)[lead][lead];
+					T	multiplier = (*this)[r][lead] / divisor;
+
+					for (size_t c = 0; c < this->shape.cols_nb; c++) {
+						if (r == lead) {
+							(*this)[r][c] /= divisor; /* Make pivot = 1 */
+						} else {
+							(*this)[r][c] -= (*this)[lead][c] * multiplier; /* Make other = 0 */
+						}
+					}
+				}
+				++lead;
+			}
+			return (*this);
+		}
 		Matrix	row_echelon() {
+			/*
+			 * Row echelon form:
+			 * The first number in the row (called a leading coefficient) is 1.
+			 * Every leading 1 is to the right of the one above it.
+			 * Any non-zero rows are always above rows with all zeros.
+			 */
+
+			/*
+			 * Reduced row echelon form:
+			 * The first non-zero number in the first row (the leading entry) is the number 1.
+			 * The second row also starts with the number 1, which is further to the right than the leading entry in the first row.
+			 * For every subsequent row, the number 1 must be further to the right.
+			 * The leading entry in each row must be the only non-zero number in its column.
+			 * Any non-zero rows are placed at the bottom of the matrix.
+			 */
 			size_t lead = 0;
 
 			for (size_t rix = 0; rix < shape.rows_nb; rix++) {
@@ -358,6 +407,10 @@ namespace ft {
 			return (sum);
 		}
 		[[nodiscard]] T	determinant() const {
+			/*
+			 * if nonzero, the matrix is invertible.
+			 * The determinant of a matrix is the factor by which areas are scaled by this matrix.
+			 */
 			T result = 0;
 			T sign = 1;
 
@@ -366,7 +419,7 @@ namespace ft {
 			if (shape.rows_nb == 1)
 				return (*this)[0][0];
 			else if (shape.rows_nb == 2) {
-				return ((*this)[0][0] * (*this)[1][1] - (*this)[0][1] * (*this)[1][0]);
+				return ((*this)[0][0] * (*this)[1][1] - ((*this)[0][1] * (*this)[1][0]));
 			}
 
 			for (size_t i = 0; i < shape.rows_nb; i++) {
@@ -390,6 +443,13 @@ namespace ft {
 			}
 			return (out);
 		}
+		void	augment() {
+			Matrix identity = Matrix::identity(this->shape.rows_nb);
+			for (size_t i = 0; i < this->shape.rows_nb; i++) {
+				(*this)[i].insert((*this)[i].end(), identity[i].begin(), identity[i].end());
+			}
+			this->set_shape();
+		}
 		[[nodiscard]] Matrix	hstack(const Matrix& rhs) const {
 			Matrix	out(*this);
 
@@ -409,19 +469,64 @@ namespace ft {
 			return (out);
 		}
 
+		void	add_scl(size_t dst, size_t src, float scl) {
+			for (size_t i = 0; i < (*this)[dst].size(); i++) {
+				(*this)[dst][i] += scl * (*this)[src][i];
+			}
+		}
+
+		[[nodiscard]] Matrix	adjoint_2by2() const {
+			Matrix	adj(*this);
+
+			std::swap(adj[0][0], adj[1][1]);
+			adj[0][1] *= -1;
+			adj[1][0] *= -1;
+			return (adj);
+		}
+		[[nodiscard]] Matrix	inverse_2by2() const {
+			T	det = this->determinant();
+			Matrix	adj = this->adjoint_2by2();
+
+			return (adj * (T(1.0) / det));
+		}
+
 		[[nodiscard]] Matrix	inverse() const {
 			Matrix	out(*this);
 
 			if (this->shape.rows_nb != shape.cols_nb)
 				throw std::runtime_error("bad matrix for inverse");
+			if (this->shape.rows_nb == 2)
+				return (this->inverse_2by2());
 			const T det = this->determinant();
-			for (size_t rownb = 0; rownb < shape.rows_nb; rownb++) {
-				for (size_t colnb = 0; colnb < shape.cols_nb; colnb++) {
-					T first = (*this)[(rownb + 1) % 3][(colnb + 1) % 3] * (*this)[(rownb + 2) % 3][(colnb + 2) % 3];
-					T second = (*this)[(rownb + 1) % 3][(colnb + 2) % 3] * (*this)[(rownb + 2) % 3][(colnb + 1) % 3];
-					out[rownb][colnb] = (first - second) / det;
+			if (det == T(0))
+				throw std::runtime_error("Matrix with determinant 0 is not invertible");
+
+			out.augment();
+
+			/* Applying Gauss Jordan Elimination */
+			for (size_t row = 0; row < shape.rows_nb; row++) {
+				for (size_t col = 0; col < shape.cols_nb; col++) {
+					if (row != col) {
+						T ratio = out[col][row] / out[row][row];
+						for (size_t k = 0; k < out.shape.cols_nb; k++) {
+							out[col][k] = out[col][k] - ratio * out[row][k];
+						}
+					}
 				}
 			}
+
+			/* Row operations to make principal diagional 1 */
+			for (size_t i = 0; i < shape.rows_nb; i++) {
+				for (size_t j = shape.rows_nb; j < out.shape.cols_nb; j++) {
+					out[i][j] = out[i][j] / out[i][i];
+				}
+			}
+
+			/* Remove first N columns */
+			for (size_t i = 0; i < shape.rows_nb; i++) {
+				out[i].erase(out[i].begin(), out[i].begin() + shape.rows_nb);
+			}
+			std::cout << out;
 			return (out);
 		}
 
@@ -429,6 +534,10 @@ namespace ft {
 		 * ex13
 		 */
 		[[nodiscard]] size_t	rank() const {
+			/*
+			 * a matrix's rank is the amount of linearly independent columns
+			 * : the dimension of vector space spanned by its rows
+			 */
 			Matrix	copy(*this);
 			size_t rank = 0;
 			std::vector<bool>	row_selected(shape.rows_nb, false);

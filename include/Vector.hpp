@@ -47,6 +47,16 @@ namespace ft {
 			return (*this);
 		}
 
+		bool	operator==(const Vector& rhs) const {
+			if (this->size() != rhs.size())
+				return (false);
+			for (size_t i = 0; i < this->size(); i++) {
+				if ((*this)[i] != rhs[i])
+					return (false);
+			}
+			return (true);
+		}
+
 		/*
 		 * ex00
 		 */
@@ -146,6 +156,8 @@ namespace ft {
 		 * ex05
 		 */
 		T	angle_cos(const Vector& rhs) const {
+			// https://www.youtube.com/watch?v=2pIlGSu6Ta4
+			// https://www.geeksforgeeks.org/cosine-similarity/
 			return this->dot(rhs) / (this->norm() * rhs.norm());
 		}
 
