@@ -448,6 +448,7 @@ namespace ft {
 			for (size_t i = 0; i < this->shape.rows_nb; i++) {
 				(*this)[i].insert((*this)[i].end(), identity[i].begin(), identity[i].end());
 			}
+			this->set_shape();
 		}
 		[[nodiscard]] Matrix	hstack(const Matrix& rhs) const {
 			Matrix	out(*this);
@@ -494,19 +495,43 @@ namespace ft {
 
 			if (this->shape.rows_nb != shape.cols_nb)
 				throw std::runtime_error("bad matrix for inverse");
-			if (this->shape.rows_nb == 2)
-				return (this->inverse_2by2());
+//			if (this->shape.rows_nb == 2)
+//				return (this->inverse_2by2());
 			const T det = this->determinant();
 			if (det == T(0))
 				throw std::runtime_error("Matrix with determinant 0 is not invertible");
 
-			for (size_t rownb = 0; rownb < shape.rows_nb; rownb++) {
-				for (size_t colnb = 0; colnb < shape.cols_nb; colnb++) {
-					T first = (*this)[(rownb + 1) % 3][(colnb + 1) % 3] * (*this)[(rownb + 2) % 3][(colnb + 2) % 3];
-					T second = (*this)[(rownb + 1) % 3][(colnb + 2) % 3] * (*this)[(rownb + 2) % 3][(colnb + 1) % 3];
-					out[rownb][colnb] = (first - second) / det;
+			out.augment();
+
+			/* Applying Gauss Jordan Elimination */
+			for (size_t i = 0; i < shape.rows_nb; i++) {
+				if (out[i][i] == 0) {
+					continue;
+					std::cerr << "i=" << i << "\n" << out << "\n";
+					throw std::runtime_error("cant be 0");
+				}
+				for (size_t j = 0; j < shape.rows_nb; j++) {
+					if (i != j) {
+						T ratio = out[j][i] / out[i][i];
+						for (size_t k = 0; k < out.shape.cols_nb; k++) {
+							out[j][k] = out[j][k] - ratio * out[i][k];
+						}
+					}
 				}
 			}
+
+			/* Row operations to make principal diagional 1 */
+			for (size_t i = 0; i < shape.rows_nb; i++) {
+				for (size_t j = shape.rows_nb; j < out.shape.cols_nb; j++) {
+					out[i][j] = out[i][j] / out[i][i];
+				}
+			}
+
+			/* Remove first N columns */
+			for (size_t i = 0; i < shape.rows_nb; i++) {
+				out[i].erase(out[i].begin(), out[i].begin() + shape.rows_nb);
+			}
+			std::cout << out;
 			return (out);
 		}
 
