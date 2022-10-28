@@ -522,11 +522,13 @@ namespace ft {
 				}
 			}
 
-			/* Remove first N columns */
+			/*
+			 * Remove first n columns
+			 * So we only keep the columns that were originally the added identity matrix
+			 */
 			for (size_t i = 0; i < shape.rows_nb; i++) {
 				out[i].erase(out[i].begin(), out[i].begin() + shape.rows_nb);
 			}
-			std::cout << out;
 			return (out);
 		}
 
@@ -537,6 +539,8 @@ namespace ft {
 			/*
 			 * a matrix's rank is the amount of linearly independent columns
 			 * : the dimension of vector space spanned by its rows
+			 * It is how many of the rows are 'unique', not made of other rows
+			 * (https://www.mathsisfun.com/algebra/matrix-rank.html)
 			 */
 			Matrix	copy(*this);
 			size_t rank = 0;
