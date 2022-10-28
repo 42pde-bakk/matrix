@@ -40,7 +40,4 @@
 cmake-build-debug/
 debug/
 
-
-proj
-display
-assets/
+resources/matrix_display_linux/proj
