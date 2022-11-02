@@ -174,7 +174,8 @@ namespace ft {
 			out[0] = std::fma((*this)[1], rhs[2], -rhs[1] * (*this)[2]);
 			out[1] = std::fma((*this)[2], rhs[0], -rhs[2] * (*this)[0]);
 			out[2] = std::fma((*this)[0], rhs[1], -rhs[0] * (*this)[1]);
-			return (out);		}
+			return (out);
+		}
 
 
 		friend std::ostream&	operator<<(std::ostream& o, ft::Vector<T>& vec) {

@@ -428,7 +428,7 @@ namespace ft {
 				T minority_det = minority.determinant();
 //				result = std::fma(sign * first, minority_det, result);
 				result += sign * first * minority_det;
-;				sign = -sign;
+				sign = -sign;
 			}
 			return (result);
 		}
